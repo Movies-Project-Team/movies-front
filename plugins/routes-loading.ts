@@ -7,12 +7,10 @@ export default defineNuxtPlugin(() => {
   const loadingStore = useLoadingStore();
   const router = useRouter();
 
-  router.beforeEach((to, from, next) => {
+  router.beforeEach(async (to, from, next) => {
     loadingStore.show(); 
 
-    setTimeout(() => {
-      next();
-    }, 200);
+    await new Promise((resolve) => setTimeout(resolve, 200));
   });
 
   router.afterEach(() => {
