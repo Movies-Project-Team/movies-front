@@ -1,7 +1,36 @@
 @import 'primeicons/primeicons.css';
+@import "swiper/swiper-bundle.css";
+
 
 body {
     font-family: SF Pro, Roboto, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     margin: 0;
     padding: 0;
+    background-color: #191b24;
+    color: #fff
+}
+
+.p-menubar-item-icon,
+.p-menubar-item-label,
+.p-inputtext::placeholder{
+    color: #fff
+}
+
+.p-menubar-submenu,
+.p-menubar-item-content:focus,
+.p-menubar-item-content:target,
+.p-menubar-item-content:hover {
+    background: #22242c!important;
+    color: #e6ac06!important;
+}
+
+.p-menubar-root-list {
+    z-index: 9999;
+}
+
+.p-menubar-submenu {
+    margin-top: 10px!important;
+    background: #191b24!important;
+    color: #e6ac06!important;
+    border: none!important
 }
