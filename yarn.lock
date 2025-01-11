@@ -716,7 +716,7 @@
     which "^3.0.1"
     ws "^8.18.0"
 
-"@nuxt/kit@3.15.1", "@nuxt/kit@^3.14.1592", "@nuxt/kit@^3.15.0", "@nuxt/kit@^3.15.1", "@nuxt/kit@^3.7.3", "@nuxt/kit@^3.9.0":
+"@nuxt/kit@3.15.1", "@nuxt/kit@^3.14.159", "@nuxt/kit@^3.14.1592", "@nuxt/kit@^3.15.0", "@nuxt/kit@^3.15.1", "@nuxt/kit@^3.7.3", "@nuxt/kit@^3.9.0":
   version "3.15.1"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.15.1.tgz#4b3bd1e2dafd1c14fbb7ac8ef45dc5ee0cc5ec90"
   integrity sha512-7cVWjzfz3L6CsZrg6ppDZa7zGrZxCSfZjEQDIvVFn4mFKtJlK9k2izf5EewL6luzWwIQojkZAC3iq/1wtgI0Xw==
@@ -3434,6 +3434,14 @@ nuxi@^3.17.2:
   resolved "https://registry.yarnpkg.com/nuxi/-/nuxi-3.20.0.tgz#2cddbce673574c16ad56d031431ad3f5170efc74"
   integrity sha512-E1R6QvUoinlAkP1EMesU0Dn1xLDLFli9LzaVAYdsmC2frHGIc15jMDRzwkAgK/8ae0H+tjHlfi/Qps/jZwF+7g==
 
+nuxt-swiper@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nuxt-swiper/-/nuxt-swiper-2.0.0.tgz#42b541d99e79b8b425e0ae6f82f56c25e56fcb96"
+  integrity sha512-9NJ7ipoo3sBqFOtnYccVjVPuywGqY1vA82R2YinHo/U4Mw8c0Uy/Q+ep7qihLWr/3wZq9BqFOKPuWKw5xKl77Q==
+  dependencies:
+    "@nuxt/kit" "^3.14.159"
+    swiper "^11.1.14"
+
 nuxt@^3.15.1:
   version "3.15.1"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.15.1.tgz#ef8743d458b5103e510b89a06929449bc3373230"
@@ -4515,6 +4523,11 @@ svgo@^3.3.2:
     css-what "^6.1.0"
     csso "^5.0.5"
     picocolors "^1.0.0"
+
+swiper@^11.1.14, swiper@^11.2.1:
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.2.1.tgz#0f3fcafa30301a1c76e3ef9e85979ac2daeefc18"
+  integrity sha512-62G69+iQRIfUqTmJkWpZDcX891Ra8O9050ckt1/JI2H+0483g+gq0m7gINecDqMtDh2zt5dK+uzBRxGhGOOvQA==
 
 system-architecture@^0.1.0:
   version "0.1.0"

@@ -5,7 +5,12 @@ import routerConfigs from "./app/router.options"
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@primevue/nuxt-module','@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+  modules: [
+    '@primevue/nuxt-module',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    'nuxt-swiper',
+  ],
   primevue: {
     autoImport: true,
     options: {
