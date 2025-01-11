@@ -11,6 +11,8 @@ export default defineNuxtPlugin(() => {
     loadingStore.show(); 
 
     await new Promise((resolve) => setTimeout(resolve, 200));
+
+    next();
   });
 
   router.afterEach(() => {

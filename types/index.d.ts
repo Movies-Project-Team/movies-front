@@ -18,8 +18,3 @@ type Profile = {
   gender: string,
   image: string,
 }
-
-type SubjectItem = {
-  image?: string,
-  content: string,
-}
