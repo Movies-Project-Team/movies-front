@@ -100,12 +100,11 @@ useSwiper(swiperCreativeRef, {
               :key="`slide-creative-${slide.id}`"
               class="swiper-slide"
             >
-              <NuxtImg 
-                :src="slide.src" 
-                :alt="slide.alt" 
+              <img 
+                :src="slide.src"
+                :alt="slide.alt"
                 style="width: 100%; height: 810px; border-radius: 8px;" 
-                fit="cover"
-                loading="lazy"
+                provider="netlify"
               />
               <div class="overlay"></div>
               <Flex direction="column" class="slide-content">
