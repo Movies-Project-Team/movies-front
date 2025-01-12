@@ -139,12 +139,12 @@ useSwiper(swiperCreativeRef, {
                   </Box>
                 </Flex>
                 <Button 
-                  icon="pi pi-play" 
-                  rounded 
+                  label="Xem ngay"
+                  icon="pi pi-play-circle"
                   aria-label="Filter" 
                   :style="{
-                    width: '70px',
-                    height: '70px',
+                    width: '170px',
+                    padding: '15px 31px',
                     background: 'linear-gradient(39deg, #ffb300, #ffcc66)'
                   }"/>
               </Flex>

@@ -14,7 +14,8 @@ import MenuSideBar from './MenuSideBar.vue';
       height: '90px',
       paddingTop: '0px',
       paddingBottom: '0px',
-      background: 'none'
+      background: 'none',
+      fontWeight: '600'
     }"
   >
     <template #start>
