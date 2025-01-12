@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { InputText, Toolbar } from 'primevue';
+import { IconField, InputIcon, InputText, OverlayBadge, Toolbar } from 'primevue';
 import Flex from '../atoms/Flex.vue';
 import Box from '../atoms/Box.vue';
 import MenuSideBar from './MenuSideBar.vue';
@@ -31,25 +31,14 @@ import MenuSideBar from './MenuSideBar.vue';
                 fill="transparent"
             />
         </svg>
-        <Box
+        <IconField
           :style="{
             position: 'relative'
           }"
         >
-          <Box
-            :style="{
-              position: 'absolute',
-              left:' 1rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              flexShrink: 0,
-              padding: '3px',
-              color: '#fff',
-              fontSize: '16px',
-            }"
-          >
+          <InputIcon>
             <i class="pi pi-search"></i>
-          </Box>
+          </InputIcon>
           <InputText 
             type="text" 
             placeholder="Tìm kiếm phim, diễn viên"
@@ -65,23 +54,26 @@ import MenuSideBar from './MenuSideBar.vue';
               background: '#22242c'
             }"
           />
-        </Box>
+        </IconField>
       </Flex>
     </template>
     <template #center>
       <MenuSideBar />
     </template>
     <template #end>
-      <Button
-        label="Đăng nhập"
-        icon="pi pi-user"
-        raised
-        :style="{
-          
-        }"
+      <Flex
+        gap="24px"
+        align="center"
       >
-        
-      </Button>
+        <OverlayBadge value="4" severity="danger">
+          <Avatar icon="pi pi-bell" size="normal" />
+        </OverlayBadge>
+        <Button
+          label="Đăng nhập"
+          icon="pi pi-user"
+          raised
+        />
+      </Flex>
     </template>
   </Toolbar>
 </template>
