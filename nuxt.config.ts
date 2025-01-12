@@ -52,4 +52,12 @@ export default defineNuxtConfig({
       scrollBehaviorType: 'smooth',
     }
   },
+  buildModules: ['@nuxt/image'],
+  image: {
+    provider: 'netlify',
+    domains: ['https://image.tmdb.org/t/p/original'],
+    netlify: {
+      baseURL: 'https://image.tmdb.org/t/p/original', 
+    },
+  }
 })
