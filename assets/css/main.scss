@@ -39,3 +39,9 @@ i,
 .p-button-label {
     font-weight: 700!important;
 }
+
+.p-button:hover {
+    background: linear-gradient(248.28deg, #9e61ff 9.54%, rgba(142, 97, 255, 0) 32.8%), radial-gradient(81.71% 279.87% at -16.57% -92%, #619bff 28.69%, rgba(205, 219, 248, 0) 69.54%), #6c52ee!important;
+    opacity: 0.9!important;
+    border: none!important;
+}

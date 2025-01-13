@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { IconField, InputIcon, InputText, OverlayBadge, Toolbar } from 'primevue';
 import Flex from '../atoms/Flex.vue';
-import Box from '../atoms/Box.vue';
 import MenuSideBar from './MenuSideBar.vue';
+import AuthModal from './modal/AuthModal.vue';
 
+const isOpenModal = ref(false);
 </script>
 
 <template>
@@ -72,9 +73,12 @@ import MenuSideBar from './MenuSideBar.vue';
         <Button
           label="Đăng nhập"
           icon="pi pi-user"
+          :style="{ padding: '10px' }"
           raised
+          @click="isOpenModal = true"
         />
       </Flex>
+      <AuthModal :visible="isOpenModal"/>
     </template>
   </Toolbar>
 </template>

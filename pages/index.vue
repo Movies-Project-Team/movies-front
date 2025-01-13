@@ -145,7 +145,6 @@ useSwiper(swiperCreativeRef, {
                   :style="{
                     width: '170px',
                     padding: '15px 31px',
-                    background: 'linear-gradient(39deg, #ffb300, #ffcc66)'
                   }"/>
               </Flex>
             </swiper-slide>
