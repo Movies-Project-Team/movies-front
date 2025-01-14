@@ -2,6 +2,7 @@
 import { useSwiper } from '#imports'
 import { Button } from 'primevue';
 import { ref } from 'vue'
+import { EffectFade } from 'swiper/modules';
 import Box from '~/components/atoms/Box.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
@@ -72,6 +73,11 @@ const slides = ref([
 const swiperCreativeRef = ref(null)
 
 useSwiper(swiperCreativeRef, {
+  modules: [EffectFade], 
+  effect: 'fade',
+  fadeEffect: {
+    crossFade: true,
+  },
   autoplay: {
     delay: 2000,
     disableOnInteraction: true,
@@ -103,7 +109,7 @@ useSwiper(swiperCreativeRef, {
               <img 
                 :src="slide.src"
                 :alt="slide.alt"
-                style="width: 100%; height: 810px; border-radius: 8px;" 
+                style="width: 100%; height: 810px;" 
                 provider="netlify"
               />
               <div class="overlay"></div>
@@ -145,7 +151,6 @@ useSwiper(swiperCreativeRef, {
                   :style="{
                     width: '170px',
                     padding: '15px 31px',
-                    background: 'linear-gradient(39deg, #ffb300, #ffcc66)'
                   }"/>
               </Flex>
             </swiper-slide>
@@ -215,7 +220,6 @@ swiper-slide {
   padding: 100px 50px;
   color: #fff;
   padding: 1rem;
-  border-radius: 8px;
   z-index: 9999;
 }
 
@@ -245,7 +249,6 @@ swiper-slide {
     rgba(0, 0, 0, 0.8) 100%
   );
   z-index: 1;
-  border-radius: 8px;
 }
 
 .slide-title {
