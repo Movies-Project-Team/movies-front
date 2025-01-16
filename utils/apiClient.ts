@@ -1,28 +1,28 @@
-// ~/utils/apiClient.ts
-import { getCookie } from '~/utils/cookie';
-import { logout } from '@/utils';
+// // ~/utils/apiClient.ts
+// import { getCookie } from '~/utils/cookie';
+// import { logout } from '@/utils';
 
-export const apiClient = () => {
-  const config = useRuntimeConfig();
+// export const apiClient = () => {
+//   const config = useRuntimeConfig();
 
-  const api = $fetch.create({
-    baseURL: config.public.apiBaseUrl.base,
-    headers: {
-      Authorization: `Bearer ${getCookie('access_token')}`,
-    },
-    onRequest({ request, options }) {
-      const token = getCookie('access_token');
-      if (token) {
-        options.headers = {
-          ...options.headers,
-        };
-      }
-    },
+//   const api = $fetch.create({
+//     baseURL: config.public.apiBaseUrl.base,
+//     headers: {
+//       Authorization: `Bearer ${getCookie('access_token')}`,
+//     },
+//     onRequest({ request, options }) {
+//       const token = getCookie('access_token');
+//       if (token) {
+//         options.headers = {
+//           ...options.headers,
+//         };
+//       }
+//     },
     
-    onResponse({ response }) {
+//     onResponse({ response }) {
 
-    },
-  });
+//     },
+//   });
 
-  return api;
-};
+//   return api;
+// };

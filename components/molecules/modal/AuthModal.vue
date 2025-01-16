@@ -3,7 +3,7 @@ import { Form } from "@primevue/forms";
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { COMMON_MESSAGES } from '@/constants/messages';
 import * as z from 'zod';
-import { useLogin } from '~/composables/api/auth/use-login';
+// import { useLogin } from '~/composables/api/auth/use-login';
 import { InputText, Message, Password } from "primevue";
 import { ref, watch } from "vue";
 import Box from "~/components/atoms/Box.vue";
@@ -44,13 +44,13 @@ const schema = computed(() =>
 );
 
 const resolver = computed(() => zodResolver(schema.value));
-const loginMutation = useLogin();
+// const loginMutation = useLogin();
 const onSubmit = (data: any, closeCallback: Function) => {
-  loginMutation.mutate(data, {
-    onSuccess: () => {
-      closeCallback();
-    },
-  });
+  // loginMutation.mutate(data, {
+  //   onSuccess: () => {
+  //     closeCallback();
+  //   },
+  // });
 
 };
 </script>
