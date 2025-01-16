@@ -1322,11 +1322,6 @@
     hookable "^5.5.3"
     unhead "1.11.15"
 
-"@vee-validate/zod@^4.5.8":
-  version "4.5.8"
-  resolved "https://registry.yarnpkg.com/@vee-validate/zod/-/zod-4.5.8.tgz#fff2dae832a8e7583a2dbcbea964448578809120"
-  integrity sha512-I6JsGZ+n0kl9Xe2BChHCZ2UBqt1plhq7dtBIEVfimbSmNHXbT4EbdvpziD9QQ/bDuxRMjW/Yppn7a431MZSbXQ==
-
 "@vercel/nft@^0.27.5":
   version "0.27.10"
   resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.27.10.tgz#f51c391674cdc285cdd004fa1c3822374b739eb8"
