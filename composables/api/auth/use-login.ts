@@ -53,8 +53,6 @@ export const useLogin = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       loading.hide();
-      if (error?.response.status === 400) {
-      }
     },
   });
 

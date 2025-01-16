@@ -20,7 +20,7 @@ export const apiClient = () => {
     },
     
     onResponse({ response }) {
-      if (response.status === 401) {
+      if (response.status === 400) {
         logout();
       }
     },
