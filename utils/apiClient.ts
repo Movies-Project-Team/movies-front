@@ -8,15 +8,15 @@ export const apiClient = () => {
   const api = $fetch.create({
     baseURL: config.public.apiBaseUrl.base,
     headers: {
-      Authorization: `Bearer ${getCookie('access_token')}`,
+      // Authorization: `Bearer ${getCookie('access_token')}`,
     },
     onRequest({ request, options }) {
-      const token = getCookie('access_token');
-      if (token) {
-        options.headers = {
-          ...options.headers,
-        };
-      }
+      // const token = getCookie('access_token');
+      // if (token) {
+      //   options.headers = {
+      //     ...options.headers,
+      //   };
+      // }
     },
     onResponse({ response }) {
       if (response.status === 401) {
