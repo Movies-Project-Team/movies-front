@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/vue-query";
 import { apiClient } from "~/utils/apiClient";
 import { setCookie } from "~/utils/cookie";
-import useToasting from "~/composables/toast/use-toast";
 import { useLoadingStore } from "~/stores/loading";
 
 const ENDPOINT = '/auth/login';
@@ -33,7 +32,6 @@ const loginMutationFn = async (payload: LoginPayload) => {
 };
 
 export const useLogin = () => {
-  const { success, error: showError } = useToasting();
   const loading = useLoadingStore();
 
   const mutation = useMutation({
@@ -50,19 +48,12 @@ export const useLogin = () => {
         window.localStorage.setItem('avatar', image);
 
         loading.hide();
-        setTimeout(()=> {
-          success({ title: 'Success!!', description: 'Login success!!!' });
-        }, 1)
       }
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       loading.hide();
       if (error?.response.status === 400) {
-        showError({
-          title: 'Error!!',
-          description: error?.response?._data?.message,
-        });
       }
     },
   });
