@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { Form } from "@primevue/forms";
-import { InputText, Message } from "primevue";
+import { zodResolver } from '@primevue/forms/resolvers/zod';
+import { COMMON_MESSAGES } from '@/constants/messages';
+import * as z from 'zod';
+import { useLogin } from '~/composables/api/auth/use-login';
+import { InputText, Message, Password } from "primevue";
 import { ref, watch } from "vue";
 import Box from "~/components/atoms/Box.vue";
 import Flex from "~/components/atoms/Flex.vue";
@@ -19,13 +23,43 @@ watch(
 );
 
 const emit = defineEmits(["update:visible"]);
+
+const initialValues = ref({
+  username: '',
+  email: '',
+  password: '',
+  rememberLogin: false,
+});
+const isLogin = ref(true);
+
+const schema = computed(() =>
+  z.object({
+    username: z.string().trim().min(1, { message: COMMON_MESSAGES.required }),
+    email: isLogin.value
+      ? z.string().email({ message: COMMON_MESSAGES.required })
+      : z.string().optional(),
+    password: z.string().trim().min(1, { message: COMMON_MESSAGES.required }),
+    rememberLogin: z.boolean().default(false).optional(),
+  })
+);
+
+const resolver = computed(() => zodResolver(schema.value));
+const loginMutation = useLogin();
+const onSubmit = (data: any, closeCallback: Function) => {
+  loginMutation.mutate(data, {
+    onSuccess: () => {
+      closeCallback();
+    },
+  });
+
+};
 </script>
 
 <template>
   <Dialog
     v-model:visible="localVisible"
     modal
-    header="Welcome Back!"
+    header="Chào mừng trở lại!"
     :style="{ 
       maxWidth: '556px',
       minHeight: '580px',
@@ -44,7 +78,7 @@ const emit = defineEmits(["update:visible"]);
               fontWeight: '700',
               margin: '0px'
             }"
-          >Welcome Back!</h5>
+          >Chào mừng trở lại!</h5>
         </Flex>
         <Flex direction="column" gap="8px">
           <Button 
@@ -70,19 +104,52 @@ const emit = defineEmits(["update:visible"]);
             <span>or</span>
           </Box>
         </Flex>
-        <Form v-slot="$form" :style="{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '8px'
-        }">
-            <div>
-                <InputText name="username" type="text" placeholder="Nhập Email" :style="{ width: '100%', padding: '12px' }"/>
-                <Message v-if="$form.username?.invalid" severity="error" size="small" variant="simple">{{ $form.username.error?.message }}</Message>
-            </div>
-            <div>
-                <InputText name="email" type="text" placeholder="Nhập Password" :style="{ width: '100%', padding: '12px' }"/>
-                <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
-            </div>
+        <Form 
+          v-slot="$form"
+          :initialValues
+          :resolver="resolver"
+          @submit="onSubmit(initialValues, closeCallback)"
+          :style="{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }"
+        >
+            <Flex direction="column" gap="8px">
+              <InputText 
+                v-model="initialValues.username" 
+                name="username" 
+                type="text" 
+                placeholder="Nhập Email" 
+                :style="{ width: '100%', padding: '12px' }"/>
+              <Message 
+                v-if="$form.username?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+              >
+                {{ $form.username.error?.message }}
+              </Message>
+            </Flex>
+            <Flex direction="column" gap="8px">
+              <Password 
+                v-model="initialValues.password"
+                :feedback="false"
+                name="password" 
+                type="text" 
+                placeholder="Nhập Password" 
+                toggleMask 
+                fluid 
+                :style="{ width: '100%', padding: '12px' }"/>
+              <Message 
+                v-if="$form.password?.invalid" 
+                severity="error" 
+                size="small" 
+                variant="simple"
+              >
+                {{ $form.password.error?.message }}
+              </Message>
+            </Flex>
             <Flex justify="space-between" :style="{ margin: '8px 0px' }">
               <Flex gap="4px" align="center">
                 <Checkbox binary inputId="ingredient1" name="pizza" value="remember"/>
@@ -90,7 +157,7 @@ const emit = defineEmits(["update:visible"]);
               </Flex>
               <NuxtLink to="/forgot-password">Quên mật khẩu?</NuxtLink>
             </Flex>
-            <Button label="Đăng nhập" :style="{ padding: '15px 31px' }" @click="closeCallback"/>
+            <Button type="submit" label="Đăng nhập" :style="{ padding: '15px 31px' }"/>
             <Box :style="{ marginTop: '10px', fontSize: '14px', textAlign: 'center', color: '#ddd' }">
               <span>Bằng cách đăng ký, bạn đồng ý với Điều khoản sử dụng và Chính sách bảo mật của chúng tôi</span>
             </Box>
