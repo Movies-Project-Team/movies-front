@@ -59,5 +59,12 @@ export default defineNuxtConfig({
     netlify: {
       baseURL: 'https://image.tmdb.org/t/p/original', 
     },
-  }
+  },
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: {
+        base: 'https://dummyjson.com',
+      },
+    }
+  },
 })
