@@ -45,8 +45,6 @@ export const useLogin = () => {
       
       if (accessToken) {
         setCookie('access_token', accessToken);
-        window.localStorage.setItem('avatar', image);
-
         loading.hide();
       }
     },
