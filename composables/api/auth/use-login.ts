@@ -28,11 +28,6 @@ const loginMutationFn = async (payload: LoginPayload) => {
     method: 'POST',
     body: payload,
   });
-  console.log(response);
-  
-  if (!response || Object.keys(response).length === 0) {
-    throw new Error('Empty response from server');
-  }
   
   return response;
 };
