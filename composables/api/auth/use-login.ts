@@ -28,6 +28,12 @@ const loginMutationFn = async (payload: LoginPayload) => {
     method: 'POST',
     body: payload,
   });
+  console.log(response);
+  
+  if (!response || Object.keys(response).length === 0) {
+    throw new Error('Empty response from server');
+  }
+  
   return response;
 };
 
@@ -41,7 +47,7 @@ export const useLogin = () => {
       loading.show();
     },
     onSuccess: (data: LoginResponse) => {
-      const { accessToken, image } = data;
+      const { accessToken } = data;
       
       if (accessToken) {
         setCookie('access_token', accessToken);

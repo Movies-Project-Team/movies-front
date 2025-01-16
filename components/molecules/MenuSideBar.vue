@@ -39,13 +39,13 @@ const items = ref([
 
 <template>
   <div class="card">
-      <Menubar 
-        :model="items"
-        :style="{
-          background: 'none',
-          border: 'none',
-          color: '#fff',
-        }" 
+    <Menubar 
+    :model="items"
+    :style="{
+        background: 'none',
+        border: 'none',
+        color: '#fff',
+    }" 
       />
   </div>
 </template>
