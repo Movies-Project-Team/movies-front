@@ -14,6 +14,7 @@ const props = defineProps<{
 }>();
 
 const localVisible = ref(props.visible);
+const isSuccess = ref(false);
 
 watch(
   () => props.visible,
@@ -22,7 +23,7 @@ watch(
   }
 );
 
-const emit = defineEmits(["update:visible"]);
+const emit = defineEmits(["update:visible", "loginSuccess"]);
 
 const initialValues = ref({
   username: '',
@@ -49,6 +50,8 @@ const onSubmit = (data: any, closeCallback: Function) => {
   loginMutation.mutate(data, {
     onSuccess: () => {
       closeCallback();
+      isSuccess.value = true;
+      emit("loginSuccess", isSuccess.value);
     },
   });
 
@@ -66,6 +69,7 @@ const onSubmit = (data: any, closeCallback: Function) => {
       padding: '38px 70px 45px 70px',
       width: 'calc(100% - 40px)',
     }"
+    @hide="emit('update:visible', false)"
   >
     <template #container="{ closeCallback }">
       <Flex direction="column" gap="20px">

@@ -3,8 +3,14 @@ import { IconField, InputIcon, InputText, OverlayBadge, Toolbar } from 'primevue
 import Flex from '../atoms/Flex.vue';
 import MenuSideBar from './MenuSideBar.vue';
 import AuthModal from './modal/AuthModal.vue';
+import MultiProfileModal from '@/components/molecules/modal/MultiProfileModal.vue';
 
 const isOpenModal = ref(false);
+const isLoginSuccess = ref(false);
+
+const handleLoginSuccess = (isSuccess: boolean) => {
+  isLoginSuccess.value = isSuccess;
+};
 </script>
 
 <template>
@@ -78,7 +84,16 @@ const isOpenModal = ref(false);
           @click="isOpenModal = true"
         />
       </Flex>
-      <AuthModal :visible="isOpenModal"/>
+      <AuthModal 
+        :visible="isOpenModal" 
+        @loginSuccess="handleLoginSuccess" 
+        @update:visible="isOpenModal = $event"
+      />
+      <MultiProfileModal 
+        v-if="isLoginSuccess" 
+        :visible="isLoginSuccess" 
+        @update:visible="isLoginSuccess = $event"
+      />
     </template>
   </Toolbar>
 </template>
