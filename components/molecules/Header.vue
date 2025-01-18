@@ -1,16 +1,57 @@
 <script setup lang="ts">
-import { IconField, InputIcon, InputText, OverlayBadge, Toolbar } from 'primevue';
+import { IconField, InputIcon, InputText, Menu, OverlayBadge, Toolbar } from 'primevue';
 import Flex from '../atoms/Flex.vue';
 import MenuSideBar from './MenuSideBar.vue';
 import AuthModal from './modal/AuthModal.vue';
 import MultiProfileModal from '@/components/molecules/modal/MultiProfileModal.vue';
+import { getCookie } from "~/utils/cookie";
 
 const isOpenModal = ref(false);
 const isLoginSuccess = ref(false);
+const cookieAuth = getCookie('access_token');
+const profileStore = useProfileStore();
 
 const handleLoginSuccess = (isSuccess: boolean) => {
   isLoginSuccess.value = isSuccess;
 };
+
+const menu = ref();
+const items = ref([
+    {
+        label: 'Chào Nguyễn Trọng Hiếu',
+    },
+    {
+        separator: true
+    },
+    {
+        label: 'Yêu thích',
+        icon: 'pi pi-heart-fill'
+    },
+    {
+        label: 'Danh sách',
+        icon: 'pi pi-plus',
+    },
+    {
+        label: 'Xem tiếp',
+        icon: 'pi pi-refresh'
+    },
+    {
+        label: 'Tài khoản',
+        icon: 'pi pi-user'
+    },
+    {
+        separator: true
+    },
+    {
+        label: 'Thoát',
+        icon: 'pi pi-sign-out',
+    }
+]);
+
+const toggle = (event: any) => {
+    menu.value.toggle(event);
+};
+
 </script>
 
 <template>
@@ -76,12 +117,27 @@ const handleLoginSuccess = (isSuccess: boolean) => {
         <OverlayBadge value="4" severity="danger">
           <Avatar icon="pi pi-bell" size="normal" />
         </OverlayBadge>
+        <Flex v-if="profileStore.isVerify && cookieAuth" >
+          <Avatar shape="circle" image="https://www.gravatar.com/avatar/05dfd4b41340d09cae045235eb0893c3?d=mp" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu"/>
+          <Menu 
+            ref="menu" 
+            id="overlay_tmenu" 
+            :model="items" 
+            popup
+            :style="{
+                background: 'rgba(15, 17, 26, .95)',
+                border: 'none',
+                color: '#fff',
+            }"  
+          />
+        </Flex>
         <Button
           label="Đăng nhập"
           icon="pi pi-user"
           :style="{ padding: '10px' }"
           raised
           @click="isOpenModal = true"
+          v-else
         />
       </Flex>
       <AuthModal 
@@ -98,4 +154,5 @@ const handleLoginSuccess = (isSuccess: boolean) => {
   </Toolbar>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
