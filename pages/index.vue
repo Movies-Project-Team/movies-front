@@ -109,11 +109,10 @@ useSwiper(swiperCreativeRef, {
               <img 
                 :src="slide.src"
                 :alt="slide.alt"
-                style="width: 100%; height: 810px;" 
+                style="width: 100%; height: calc(100vh - 40px); object-fit: fill;" 
                 provider="netlify"
               />
-              <div class="overlay"></div>
-              <Flex direction="column" class="slide-content">
+              <Flex direction="column" justify="center" class="slide-content">
                 <h2 
                   :style="{
                     fontSize: '60px'
@@ -178,7 +177,6 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  padding: 1rem 1rem;
 }
 
 main > .swiper-wrapper:not(:last-child) {
@@ -197,7 +195,6 @@ swiper-slide {
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
   height: 15vh;
-  background-color: #202331;
 }
 
 .swiper-wrapper {
@@ -212,12 +209,19 @@ swiper-slide {
 
 .slide-content {
   position: absolute;
-  top: 45%;
-  left: 20px;
-  transform: translateY(-50%);
-  max-width: 700px;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 100px 50px;
+  height: 100%;
+  padding: 0px 70px!important;
+  background: linear-gradient(
+    90deg, 
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 70%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
   color: #fff;
   padding: 1rem;
   z-index: 9999;
@@ -232,23 +236,6 @@ swiper-slide {
 .slide-description {
   font-size: 1rem;
   margin: 0;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg, 
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 20%,
-    transparent 50%,
-    rgba(0, 0, 0, 0.4) 80%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  z-index: 1;
 }
 
 .slide-title {

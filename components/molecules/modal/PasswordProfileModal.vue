@@ -29,6 +29,11 @@ const resolver = ref(
 );
 
 const profileStore = useProfileStore();
+
+const handleVerifyPassword = () => {
+  profileStore.setVerifyStatus(true);
+  window.location.reload();
+}
 </script>
 
 <template>
@@ -65,7 +70,7 @@ const profileStore = useProfileStore();
                   <InputOtp name="passcode" v-model="initialValues.passcode"/>
                   <Message v-if="$form.passcode?.invalid" severity="error" size="small" variant="simple">{{ $form.passcode.error?.message }}</Message>
               </Flex>
-              <Button type="submit" severity="secondary" label="Submit" @click="profileStore.setVerifyStatus(true)"/>
+              <Button type="submit" severity="secondary" label="Submit" @click="handleVerifyPassword()"/>
             </Flex>
           </Form>
         </Flex>

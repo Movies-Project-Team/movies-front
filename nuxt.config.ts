@@ -63,7 +63,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: {
-        base: 'https://dummyjson.com',
+        base: '',
       },
     }
   },
