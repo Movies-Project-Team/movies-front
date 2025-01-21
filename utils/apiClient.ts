@@ -9,6 +9,9 @@ export const apiClient = () => {
     baseURL: config.public.apiBaseUrl.base,
     headers: {
       Authorization: `Bearer ${getCookie('access_token')}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
     },
     onRequest({ request, options }) {
       const token = getCookie('access_token');
