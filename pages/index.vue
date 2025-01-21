@@ -6,49 +6,56 @@ import { EffectFade } from 'swiper/modules';
 import Box from '~/components/atoms/Box.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
+import SectionContainer from '~/components/atoms/SectionContainer.vue';
+import MovieList from '~/components/molecules/MovieList.vue';
+import RankingContainer from '~/components/molecules/RankingContainer.vue';
 
 const slides = ref([
   {
     id: 1,
-    src: 'https://image.tmdb.org/t/p/original/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg',
+    src: 'https://image.tmdb.org/t/p/original/fYnEbgoNCxW9kL0IgOgtJb9JTBU.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/5qGIxdEO841C0tdY8vOdLoRVrr0.jpg',
     alt: 'Slide 1',
-    title: 'Sonic the Hedgehog 3',
+    title: 'Nosferatu',
     imdb: 8.5,
     model: 'T16',
     releaseYear: 2023,
     totalEpisodes: 12,
     genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'Sonic, Knuckles, and Tails reunite against a powerful new adversary, Shadow, a mysterious villain with powers unlike anything they have faced before. With their abilities outmatched in every way, Team Sonic must seek out an unlikely alliance in hopes of stopping Shadow and protecting the planet.',
+    description: 'A gothic tale of obsession between a haunted young woman and the terrifying vampire infatuated with her, causing untold horror in its wake.',
   },
   {
     id: 2,
-    src: 'https://image.tmdb.org/t/p/original/blSthAPRbEOJBowdxppeQqNPRh9.jpg',
+    src: 'https://image.tmdb.org/t/p/original/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg',
     alt: 'Slide 2',
-    title: 'SAKAMOTO DAYS',
+    title: 'Sonic the Hedgehog 3',
     imdb: 9.1,
     model: 'T16',
     releaseYear: 2022,
     totalEpisodes: 24,
     genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'Once the greatest hitman of all, Taro Sakamoto retired in the name of love. But when his past catches up, he must fight to protect his beloved family.',
+    description: 'Sonic, Knuckles, and Tails reunite against a powerful new adversary, Shadow, a mysterious villain with powers unlike anything they have faced before. With their abilities outmatched in every way, Team Sonic must seek out an unlikely alliance in hopes of stopping Shadow and protecting the planet',
   },
   {
     id: 3,
-    src: 'https://image.tmdb.org/t/p/original/lJuQBW4w1x6NgD514xDPqZ2Lbpz.jpg',
+    src: 'https://image.tmdb.org/t/p/original/xZm5YUNY3PlYD1Q4k7X8zd2V4AK.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/3L3l6LsiLGHkTG4RFB2aBA6BttB.jpg',
     alt: 'Slide 3',
-    title: 'The Apothecary Diaries',
+    title: 'Back in Action',
     imdb: 7.8,
     model: 'T16',
     releaseYear: 2021,
     totalEpisodes: 10,
     genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'Maomao lived a peaceful life with her apothecary father. Until one day, she sold as a lowly servant to the emperor palace. But she wasn meant for a compliant life among royalty. So when imperial heirs fall ill, she decides to step in and find a cure This catches the eye of Jinshi, a handsome palace official who promotes her. Now, she making a name for herself solving medical mysteries',
+    description: 'Fifteen years after vanishing from the CIA to start a family, elite spies Matt and Emily jump back into the world of espionage when their cover is blowns.',
   },
   {
     id: 4,
-    src: 'https://image.tmdb.org/t/p/original/j45FEq8BPUJDVm3cGIQye0tqPpL.jpg',
+    src: 'https://image.tmdb.org/t/p/original/5OsiT39OiZNdD0v2LiAcI2TpSYj.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg',
     alt: 'Slide 4',
-    title: 'Goosebumps',
+    title: 'Severance',
     imdb: 8.0,
     model: 'T16',
     releaseYear: 2020,
@@ -58,9 +65,75 @@ const slides = ref([
   },
   {
     id: 5,
-    src: 'https://image.tmdb.org/t/p/original/b3mdmjYTEL70j7nuXATUAD9qgu4.jpg',
+    src: 'https://image.tmdb.org/t/p/original/z1buWt3MeqamyzVbKggLtlG1rZV.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/bEcFBnDwUXXDizdaR5EiC0qRhS3.jpg',
     alt: 'Slide 4',
-    title: 'Flow',
+    title: 'Drifting Away',
+    imdb: 8.0,
+    model: 'T16',
+    releaseYear: 2020,
+    totalEpisodes: 16,
+    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
+    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
+  },
+  {
+    id: 6,
+    src: 'https://image.tmdb.org/t/p/original/rDa3SfEijeRNCWtHQZCwfbGxYvR.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/1GvBhRxY6MELDfxFrete6BNhBB5.jpg',
+    alt: 'Slide 4',
+    title: 'Kraven the Hunter',
+    imdb: 8.0,
+    model: 'T16',
+    releaseYear: 2020,
+    totalEpisodes: 16,
+    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
+    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
+  },
+  {
+    id: 7,
+    src: 'https://image.tmdb.org/t/p/original/n5FPNMJ0eRoiQrKGfUQQRAZeaxg.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/tlliQuCupf8fpTH7RAor3aKMGy.jpg',
+    alt: 'Slide 4',
+    title: 'Silo',
+    imdb: 8.0,
+    model: 'T16',
+    releaseYear: 2020,
+    totalEpisodes: 16,
+    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
+    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
+  },
+  {
+    id: 8,
+    src: 'https://image.tmdb.org/t/p/original/87mebbBtoWzHV0kILgV6M7yIfun.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/1QdXdRYfktUSONkl1oD5gc6Be0s.jpg',
+    alt: 'Slide 4',
+    title: 'Squid Game',
+    imdb: 8.0,
+    model: 'T16',
+    releaseYear: 2020,
+    totalEpisodes: 16,
+    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
+    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
+  },
+  {
+    id: 9,
+    src: 'https://image.tmdb.org/t/p/original/uKb22E0nlzr914bA9KyA5CVCOlV.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/2E1x1qcHqGZcYuYi4PzVZjzg8IV.jpg',
+    alt: 'Slide 4',
+    title: 'Wicked',
+    imdb: 8.0,
+    model: 'T16',
+    releaseYear: 2020,
+    totalEpisodes: 16,
+    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
+    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
+  },
+  {
+    id: 10,
+    src: 'https://image.tmdb.org/t/p/original/qSOMdbZ6AOdHR999HWwVAh6ALFI.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/v313aUGmMNj6yNveaiQXysBmjVS.jpg',
+    alt: 'Slide 4',
+    title: 'Alarum',
     imdb: 8.0,
     model: 'T16',
     releaseYear: 2020,
@@ -71,7 +144,6 @@ const slides = ref([
 ])
 
 const swiperCreativeRef = ref(null)
-
 useSwiper(swiperCreativeRef, {
   modules: [EffectFade], 
   effect: 'fade',
@@ -109,7 +181,7 @@ useSwiper(swiperCreativeRef, {
               <img 
                 :src="slide.src"
                 :alt="slide.alt"
-                style="width: 100%; height: calc(100vh - 40px); object-fit: fill;" 
+                style="width: 100%; height: calc(100vh - 40px); object-fit: cover;" 
                 provider="netlify"
               />
               <Flex direction="column" justify="center" class="slide-content">
@@ -157,6 +229,14 @@ useSwiper(swiperCreativeRef, {
         </ClientOnly>
       </div>
     </div>
+    <Box :style="{ padding: '0px 50px' }">
+      <SectionContainer :title="'Bảng xếp hạng'">
+        <RankingContainer />
+      </SectionContainer>
+      <SectionContainer :title="'Phim mới'">
+        <MovieList :data="slides"/>
+      </SectionContainer>
+    </Box>
   </main>
 </template>
 
@@ -177,12 +257,6 @@ body {
 main {
   display: flex;
   flex-direction: column;
-}
-
-main > .swiper-wrapper:not(:last-child) {
-  border-bottom: 1px solid #d9d9d9;
-  padding-bottom: 2rem !important;
-  margin-bottom: 2rem !important;
 }
 
 swiper-slide {

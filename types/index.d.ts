@@ -18,3 +18,17 @@ type Profile = {
   gender: string,
   image: string,
 }
+
+type Movie = {
+  id: number;
+  title: string;
+  src: string;
+  poster: string;
+  alt: string;
+  imdb: number;
+  model: string;
+  releaseYear: number;
+  totalEpisodes: number;
+  genres: string[];
+  description: string;
+};
