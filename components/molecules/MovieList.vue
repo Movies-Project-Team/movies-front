@@ -12,6 +12,23 @@ useSwiper(swiperCreativeRef, {
   modules: [], 
   slidesPerView: 8,
   spaceBetween: '20',
+  breakpoints: {
+    '500': {
+      slidesPerView: 2,
+      spaceBetween: 20,
+    },
+    '768': {
+      slidesPerView: 3,
+    },
+    '1200': {
+      slidesPerView: 5,
+      spaceBetween: 20,
+    },
+    '1540': {
+      slidesPerView: 8,
+      spaceBetween: 20,
+    },
+  },
   creativeEffect: {
     prev: {
       translate: ['-125%', 0, -800],

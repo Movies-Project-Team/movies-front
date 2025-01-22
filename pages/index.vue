@@ -9,6 +9,7 @@ import Tag from '~/components/atoms/Tag.vue';
 import SectionContainer from '~/components/atoms/SectionContainer.vue';
 import MovieList from '~/components/molecules/MovieList.vue';
 import RankingContainer from '~/components/molecules/RankingContainer.vue';
+import { useWindowWidth } from '@/composables/resize/windowWidth';
 
 const slides = ref([
   {
@@ -143,6 +144,8 @@ const slides = ref([
   },
 ])
 
+const screenWidth = useWindowWidth();
+
 const swiperCreativeRef = ref(null)
 useSwiper(swiperCreativeRef, {
   modules: [EffectFade], 
@@ -230,8 +233,8 @@ useSwiper(swiperCreativeRef, {
       </div>
     </div>
     <Box :style="{ padding: '0px 50px' }">
-      <SectionContainer :title="'Bảng xếp hạng'">
-        <RankingContainer />
+      <SectionContainer :title="'Bảng xếp hạng'" :style="{display: screenWidth <= 900 ? 'none' : 'flex'}">
+        <RankingContainer :data="slides"/>
       </SectionContainer>
       <SectionContainer :title="'Phim mới'">
         <MovieList :data="slides"/>
