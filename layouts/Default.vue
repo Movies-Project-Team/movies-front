@@ -3,12 +3,17 @@ import Header from '@/components/molecules/Header.vue';
 </script>
 
 <template>
-  <div 
-    :style="{
-      padding: '0 2rem'
-    }"
-  >
-    <Header />
+  <div>
+    <Header 
+      :style="{
+        position: 'absolute',
+        zIndex: '9999',
+        top: '0',
+        left: '0',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }"
+    />
     <slot />
   </div>
 </template>

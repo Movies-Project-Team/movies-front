@@ -5,6 +5,7 @@ import Box from '~/components/atoms/Box.vue';
 import { Form } from '@primevue/forms';
 import { z } from 'zod';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
+import { useProfileStore } from '@/stores/profile';
 
 const props = defineProps<{
   visible: boolean;
@@ -26,6 +27,13 @@ const resolver = ref(
     })
   )
 );
+
+const profileStore = useProfileStore();
+
+const handleVerifyPassword = () => {
+  profileStore.setVerifyStatus(true);
+  window.location.reload();
+}
 </script>
 
 <template>
@@ -62,7 +70,7 @@ const resolver = ref(
                   <InputOtp name="passcode" v-model="initialValues.passcode"/>
                   <Message v-if="$form.passcode?.invalid" severity="error" size="small" variant="simple">{{ $form.passcode.error?.message }}</Message>
               </Flex>
-              <Button type="submit" severity="secondary" label="Submit" />
+              <Button type="submit" severity="secondary" label="Submit" @click="handleVerifyPassword()"/>
             </Flex>
           </Form>
         </Flex>

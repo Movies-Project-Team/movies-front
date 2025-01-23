@@ -9,18 +9,25 @@ export const apiClient = () => {
     baseURL: config.public.apiBaseUrl.base,
     headers: {
       Authorization: `Bearer ${getCookie('access_token')}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
     },
     onRequest({ request, options }) {
-      const token = getCookie('access_token');
-      if (token) {
-        options.headers = {
-          ...options.headers,
-        };
-      }
+
     },
     
     onResponse({ response }) {
-
+      if (!response.ok) {
+        if (response.status === 401) {
+          logout();
+          throw new Error('Unauthorized. Please log in again.');
+        }
+        throw new Error(`API Error: ${response.statusText}`);
+      }
+      if (!response.headers.get('content-type')?.includes('application/json')) {
+        throw new Error('Invalid JSON response');
+      }
     },
   });
 
