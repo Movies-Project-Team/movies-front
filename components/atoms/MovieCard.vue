@@ -11,7 +11,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Flex :direction="isVer2 ? 'row' : 'column'" align="center" :justify="isVer2 ? 'flex-start' : 'center'" gap="12px" :style="{ paddingBottom: '10px' }">
+  <Flex :direction="isVer2 ? 'row' : 'column'" align="center" :justify="isVer2 ? 'flex-start' : 'center'" gap="12px">
     <Box
       :style="{
         fontWeight: '700',
@@ -27,7 +27,7 @@ const props = defineProps<{
       :src="data.poster" 
       :alt="data.poster" 
       :style="{ 
-        width: isVer2 ? '50px' : '221px',
+        width: isVer2 ? '40px' : '221px',
         borderRadius: isVer2 ? '0px' : '8px'
       }"
     >

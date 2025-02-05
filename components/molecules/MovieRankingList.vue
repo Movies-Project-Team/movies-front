@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MovieCard from '../atoms/MovieCard.vue';
 import Flex from '../atoms/Flex.vue';
+import Box from '../atoms/Box.vue';
 
 const props = defineProps<{
   data: Movie[];
@@ -10,7 +11,9 @@ const props = defineProps<{
 <template>
   <ClientOnly>
     <Flex direction="column" align="flex-start" justify="flex-start">
-      <MovieCard v-for="(movie, index) in data.slice(0, 4)" :data="movie" :is-ver2="true" :pos="index + 1" :key="movie.id"/>
+      <Box v-for="(movie, index) in data.slice(0, 5)" :style="{ width: '100%', padding: '8px 0px' }">
+        <MovieCard :data="movie" :is-ver2="true" :pos="index + 1" :key="movie.id"/>
+      </Box>
     </Flex>
   </ClientOnly>
 </template>

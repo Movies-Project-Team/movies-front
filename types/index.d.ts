@@ -8,17 +8,6 @@ type Routes = {
   [key: string]: Route;
 };
 
-type Profile = {
-  accessToken: string,
-  refreshToken: string,
-  username: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  gender: string,
-  image: string,
-}
-
 type Movie = {
   id: number;
   title: string;
@@ -32,3 +21,19 @@ type Movie = {
   genres: string[];
   description: string;
 };
+
+type Profile = {
+  id: number,
+  user_id: number,
+  name: string,
+  birthday: datetime,
+  gender: number,
+  phone: number,
+  password: string,
+}
+
+type ProfileReponse = {
+  data: {
+    data: Profile[],
+  }
+}

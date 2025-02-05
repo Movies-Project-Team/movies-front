@@ -3,6 +3,7 @@ import { Dialog } from 'primevue';
 import ProfileCard from '../ProfileCard.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Box from '~/components/atoms/Box.vue';
+import { useGetListProfile } from '~/composables/api/profile/use-get-list-profile';
 
 const props = defineProps<{
   visible: boolean;
@@ -11,18 +12,10 @@ const props = defineProps<{
 const localVisible = ref(props.visible);
 const emit = defineEmits(["update:visible"]);
 
-const profileData = ref([
-  {
-    image: 'https://www.goldderby.com/wp-content/uploads/2022/11/Wednesday-Netflix-cast-Jenna-Ortega.jpg?w=620',
-    name: 'Profile 1',
-    password: '1234'
-  },
-  {
-    image: 'https://hips.hearstapps.com/hmg-prod/images/jenna-ortega-emma-myers-wednesday-1669382193.jpg?crop=0.449xw:0.893xh;0.475xw,0&resize=640:*',
-    name: 'Profile 2',
-    password: '1234'
-  },
-]);
+const userId = ref(localStorage.getItem("userId") ?? "");
+const { data } = useGetListProfile(userId);
+
+const profiles = computed(() => data.value?.data?.data ?? []);
 </script>
 
 <template>
@@ -54,7 +47,7 @@ const profileData = ref([
           >Ai đang xem vậy!!</h5>
         </Flex>
         <Flex justify="space-around">
-          <ProfileCard v-for="profile in profileData" :profile="profile"/>
+          <ProfileCard v-for="profile in profiles" :profile="profile"/>
         </Flex>
       </Flex>
     </template>

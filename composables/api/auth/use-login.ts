@@ -42,10 +42,11 @@ export const useLogin = () => {
       loading.show();
     },
     onSuccess: (data: LoginResponse) => {
-      const { accessToken } = data;
+      const { id, accessToken } = data;
       
       if (accessToken) {
         setCookie('access_token', accessToken);
+        localStorage.setItem("userId", String(id));
         loading.hide();
       }
     },

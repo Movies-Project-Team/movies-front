@@ -8,32 +8,32 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Flex :style="{ width: '100%', height: '380px', borderRadius: '8px', border: '1px solid #fff' }">
-    <Flex direction="column" gap="10px" :style="{ width: '25%', borderRight: '1px solid #fff', padding: '12px 32px' }">
+  <Flex :style="{ width: '100%', height: 'auto', borderRadius: '8px', border: '1px solid #fff2' }">
+    <Flex direction="column" gap="10px" :style="{ width: '25%', borderRight: '1px solid #fff2', padding: '24px 32px' }">
       <Flex gap="8px">
         <i class="pi pi-eye" />
-        <span :style="{ fontSize: '16px', fontWeight: '600' }">Lượt xem</span>
+        <span :style="{ fontSize: '13px', fontWeight: '600' }">LƯỢT XEM</span>
       </Flex>
       <MovieRankingList :data="data"/>
     </Flex>
-    <Flex direction="column" gap="10px" :style="{ width: '25%', borderRight: '1px solid #fff', padding: '12px 32px' }">
+    <Flex direction="column" gap="10px" :style="{ width: '25%', borderRight: '1px solid #fff2', padding: '24px 32px' }">
       <Flex gap="8px">
         <i class="pi pi-eye" />
-        <span :style="{ fontSize: '16px', fontWeight: '600' }">Lượt xem</span>
+        <span :style="{ fontSize: '13px', fontWeight: '600' }">LƯỢT XEM</span>
       </Flex>
       <MovieRankingList :data="data"/>
     </Flex>
-    <Flex direction="column" gap="10px" :style="{ width: '25%', borderRight: '1px solid #fff', padding: '12px 32px' }">
+    <Flex direction="column" gap="10px" :style="{ width: '25%', borderRight: '1px solid #fff2', padding: '24px 32px' }">
       <Flex gap="8px">
         <i class="pi pi-eye" />
-        <span :style="{ fontSize: '16px', fontWeight: '600' }">Lượt xem</span>
+        <span :style="{ fontSize: '13px', fontWeight: '600' }">LƯỢT XEM</span>
       </Flex>
       <MovieRankingList :data="data"/>
     </Flex>
-    <Flex direction="column" gap="10px" :style="{ width: '25%', padding: '12px 32px' }">
+    <Flex direction="column" gap="10px" :style="{ width: '25%', padding: '24px 32px' }">
       <Flex gap="8px">
         <i class="pi pi-eye" />
-        <span :style="{ fontSize: '16px', fontWeight: '600' }">Lượt xem</span>
+        <span :style="{ fontSize: '13px', fontWeight: '600' }">LƯỢT XEM</span>
       </Flex>
       <MovieRankingList :data="data"/>
     </Flex>

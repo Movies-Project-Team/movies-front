@@ -3,15 +3,11 @@ import Flex from '../atoms/Flex.vue';
 import PasswordProfileModal from '@/components/molecules/modal/PasswordProfileModal.vue';
 
 const props = defineProps<{
-  profile: {
-    image: string;
-    name: string;
-    password: string;
-  };
+  profile: Profile;
 }>();
 
 const isOpenPasswordModal = ref(false);
-watch(isOpenPasswordModal, (newVal) => {
+watch(props.profile, (newVal) => {
   console.log(newVal);
 })
 </script>
@@ -19,7 +15,7 @@ watch(isOpenPasswordModal, (newVal) => {
 <template>
   <Flex direction="column" align="center" gap="8px" :style="{ width: '10rem', overflow: 'hidden', cursor: 'pointer' }" @click="isOpenPasswordModal = true">
     <img 
-      :src="profile.image" 
+      src="https://www.goldderby.com/wp-content/uploads/2022/11/Wednesday-Netflix-cast-Jenna-Ortega.jpg?w=620" 
       alt=""
       :style="{
         width: '120px',
