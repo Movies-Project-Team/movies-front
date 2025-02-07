@@ -1,4 +1,3 @@
-// ~/utils/apiClient.ts
 import { getCookie } from '~/utils/cookie';
 import { logout } from '@/utils';
 
@@ -11,10 +10,10 @@ export const apiReClient = () => {
       Authorization: `Bearer ${getCookie('access_token')}`,
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
     },
+    credentials: 'include',
     onRequest({ request, options }) {
-
+      // Bạn có thể thêm logic xử lý request ở đây nếu cần
     },
     
     onResponse({ response }) {
@@ -23,10 +22,15 @@ export const apiReClient = () => {
           logout();
           throw new Error('Unauthorized. Please log in again.');
         }
-        throw new Error(`API Error: ${response.statusText}`);
-      }
-      if (!response.headers.get('content-type')?.includes('application/json')) {
-        throw new Error('Invalid JSON response');
+
+        if (response.status === 400) {
+          const errorData = response._data || {};
+          const errors = errorData.errors || {};
+
+          const errorKeys = Object.keys(errors);
+
+          throw new Error(JSON.stringify(errorKeys));
+        }
       }
     },
   });

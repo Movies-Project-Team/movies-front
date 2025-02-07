@@ -7,9 +7,6 @@ const props = defineProps<{
 }>();
 
 const isOpenPasswordModal = ref(false);
-watch(props.profile, (newVal) => {
-  console.log(newVal);
-})
 </script>
 
 <template>
@@ -29,6 +26,7 @@ watch(props.profile, (newVal) => {
     v-if="isOpenPasswordModal" 
     :visible="isOpenPasswordModal" 
     :password="profile.password" 
+    :profile-id="profile.id"
     @update:visible="isOpenPasswordModal = $event"
   />
 </template>
