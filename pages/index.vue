@@ -291,14 +291,7 @@ swiper-slide {
   width: 100%;
   height: 100%;
   padding: 0px 70px!important;
-  background: linear-gradient(
-    90deg, 
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 40%,
-    transparent 50%,
-    rgba(0, 0, 0, 0.4) 70%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
+  background: linear-gradient(to right,  rgba(34,31,31,1) 0%,rgba(34,31,31,0.4) 100%);
   color: #fff;
   padding: 1rem;
   z-index: 9999;
