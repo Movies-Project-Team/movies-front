@@ -15,7 +15,7 @@ export const useGetListProfile = (
   userId: Ref<string> = ref(""),
 ) => {
   const query = useQuery({
-    queryKey: ['comic-list', userId],
+    queryKey: ['profile-list', userId],
     queryFn: () => fetchData(userId.value),
     placeholderData: keepPreviousData,
   });

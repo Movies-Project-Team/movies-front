@@ -1,38 +1,41 @@
-
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useGetListGenres } from '~/composables/api/util/use-get-list-genres';
+import { useGetListLanguage } from '~/composables/api/util/use-get-list-language';
+
+const { data: languageResponse } = useGetListLanguage();
+const { data: genresResponse } = useGetListGenres();
+
+const formatData = (response) => {
+  const list = response.value?.data?.map(item => ({
+    label: item.title
+  })) || [];
+  
+  return list.length > 12 
+    ? [...list.slice(0, 12), { label: 'Xem thêm' }] 
+    : list;
+};
+
+const languageData = computed(() => formatData(languageResponse));
+const genresData = computed(() => formatData(genresResponse));
 
 const items = ref([
   {
-      label: 'Trang chủ',
+    label: 'Trang chủ',
   },
   {
-      label: 'Phim lẻ',
-  },
-  
-  {
-      label: 'Phim bộ',
+    label: 'Thể loại',
+    items: genresData
   },
   {
-      label: 'Quốc gia',
-      items: [
-          {
-              label: 'Việt Nam',
-          },
-          {
-              label: 'Mỹ',
-          },
-          {
-              label: 'Hàn Quốc',
-          },
-      ]
+    label: 'Quốc gia',
+    items: languageData
   },
   {
-      label: 'Diễn viên',
-  }
-  ,
+    label: 'Diễn viên',
+  },
   {
-      label: 'Tin tức',
+    label: 'Tin tức',
   }
 ]);
 </script>
@@ -40,13 +43,12 @@ const items = ref([
 <template>
   <div class="card">
     <Menubar 
-    :model="items"
-    :style="{
+      :model="items"
+      :style="{
         background: 'none',
         border: 'none',
         color: '#fff',
-    }" 
-      />
+      }" 
+    />
   </div>
 </template>
-

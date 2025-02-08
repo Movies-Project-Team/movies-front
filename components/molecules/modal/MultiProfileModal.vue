@@ -13,7 +13,7 @@ const localVisible = ref(props.visible);
 const emit = defineEmits(["update:visible"]);
 
 const userId = ref(localStorage.getItem("userId") ?? "");
-const { data } = useGetListProfile(userId);
+const { data, isLoading } = useGetListProfile(userId);
 
 const profiles = computed(() => data.value?.data?.data ?? []);
 </script>
@@ -47,7 +47,11 @@ const profiles = computed(() => data.value?.data?.data ?? []);
           >Ai đang xem vậy!!</h5>
         </Flex>
         <Flex justify="space-around">
-          <ProfileCard v-for="profile in profiles" :profile="profile"/>
+          <Flex direction="column" gap="8px" v-if="isLoading" v-for="profile in profiles">
+            <Skeleton size="7rem" />
+            <Skeleton width="7rem" />
+          </Flex>
+          <ProfileCard v-else v-for="profile in profiles" :profile="profile"/>
         </Flex>
       </Flex>
     </template>

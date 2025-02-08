@@ -37,3 +37,15 @@ type ProfileReponse = {
     data: Profile[],
   }
 }
+
+type GenresReponse = {
+  id: number,
+  title: string,
+  description: string,
+}
+
+type LanguageReponse = {
+  id: number,
+  title: string,
+  code: string,
+}
