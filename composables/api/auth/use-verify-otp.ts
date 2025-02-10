@@ -1,17 +1,21 @@
 import { useMutation } from "@tanstack/vue-query";
 import { apiReClient } from "~/utils/apiReClient";
-import { setCookie } from "~/utils/cookie";
 import { useLoadingStore } from "~/stores/loading";
 
-const ENDPOINT = '/auth/login';
+const ENDPOINT = '/auth/verify/password';
 
-interface LoginPayload {
-  email: string;
-  password: string;
+interface VerifyOtpPayload {
+  userId: number,
+  otp: string
 }
-const loginMutationFn = async (payload: LoginPayload) => {
+
+interface VerifyOtpResponse {
+  message: string,
+}
+
+const loginMutationFn = async (payload: VerifyOtpPayload) => {
   const api = apiReClient();
-  const response = await api<LoginResponse>(`${ENDPOINT}`, {
+  const response = await api<VerifyOtpResponse>(`${ENDPOINT}`, {
     method: 'POST',
     body: payload,
   });
@@ -19,7 +23,7 @@ const loginMutationFn = async (payload: LoginPayload) => {
   return response;
 };
 
-export const useLogin = () => {
+export const useVerifyOtp = () => {
   const loading = useLoadingStore();
 
   const mutation = useMutation({
@@ -28,15 +32,8 @@ export const useLogin = () => {
     onMutate: () => {
       loading.show();
     },
-    onSuccess: (dataResponse: LoginResponse) => {
-      const { data, token } = dataResponse;
-      
+    onSuccess: (data: VerifyOtpResponse) => {
       loading.hide();
-      if (token) {
-        setCookie('access_token', token);
-        localStorage.setItem("userId", String(data.id));
-        localStorage.setItem("isActive", String(data.is_active));
-      }
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {

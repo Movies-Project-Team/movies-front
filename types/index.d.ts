@@ -49,3 +49,15 @@ type LanguageReponse = {
   title: string,
   code: string,
 }
+
+type UserData = {
+  id: number,
+  email: string,
+  permisson: number,
+  is_active: number,
+}
+
+type LoginResponse = {
+  data: UserData,
+  token: string
+}

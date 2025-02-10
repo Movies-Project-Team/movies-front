@@ -3,13 +3,13 @@ import { apiReClient } from "~/utils/apiReClient";
 import { setCookie } from "~/utils/cookie";
 import { useLoadingStore } from "~/stores/loading";
 
-const ENDPOINT = '/auth/login';
+const ENDPOINT = '/auth/register';
 
-interface LoginPayload {
+interface RegisterPayload {
   email: string;
   password: string;
 }
-const loginMutationFn = async (payload: LoginPayload) => {
+const loginMutationFn = async (payload: RegisterPayload) => {
   const api = apiReClient();
   const response = await api<LoginResponse>(`${ENDPOINT}`, {
     method: 'POST',
@@ -19,7 +19,7 @@ const loginMutationFn = async (payload: LoginPayload) => {
   return response;
 };
 
-export const useLogin = () => {
+export const useRegister = () => {
   const loading = useLoadingStore();
 
   const mutation = useMutation({
@@ -33,9 +33,7 @@ export const useLogin = () => {
       
       loading.hide();
       if (token) {
-        setCookie('access_token', token);
         localStorage.setItem("userId", String(data.id));
-        localStorage.setItem("isActive", String(data.is_active));
       }
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

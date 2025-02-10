@@ -129,7 +129,7 @@ const toggle = (event: any) => {
       </Flex>
       <AuthModal 
         :visible="isOpenModal" 
-        @loginSuccess="handleLoginSuccess" 
+        @authSuccess="handleLoginSuccess" 
         @update:visible="isOpenModal = $event"
       />
       <MultiProfileModal 
