@@ -52,7 +52,7 @@ const onSubmit = (data: any) => {
 const resolver = ref(
   zodResolver(
     z.object({
-      password: z
+      otp: z
         .string()
         .min(1, { message: 'Vui lòng nhập mã xác thực.' })
         .refine(() => {

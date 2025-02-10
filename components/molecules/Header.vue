@@ -5,6 +5,7 @@ import MenuSideBar from './MenuSideBar.vue';
 import AuthModal from './modal/AuthModal.vue';
 import MultiProfileModal from '@/components/molecules/modal/MultiProfileModal.vue';
 import { getCookie } from "~/utils/cookie";
+import { logout } from '~/utils';
 
 const isOpenModal = ref(false);
 const isLoginSuccess = ref(false);
@@ -43,8 +44,9 @@ const items = ref([
         separator: true
     },
     {
-        label: 'Thoát',
+        label: 'Đăng xuất',
         icon: 'pi pi-sign-out',
+        command: logout
     }
 ]);
 
