@@ -4,6 +4,9 @@ import routerConfigs from "./app/router.options"
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+  experimental: {
+    renderJsonPayloads: false
+  },
   devtools: { enabled: true },
   modules: [
     '@primevue/nuxt-module',
@@ -64,6 +67,7 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: {
         base: 'https://dummyjson.com',
+        reBase: 'http://127.0.0.1:8000/api/v1/client'
       },
     }
   },

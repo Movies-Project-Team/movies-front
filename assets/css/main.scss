@@ -11,13 +11,30 @@ body {
 }
 
 i,
+.p-menu-item-icon,
+.p-menu-item-label,
 .p-menubar-item-icon,
 .p-menubar-item-label,
 .p-inputtext::placeholder{
-    color: #fff
+    color: #fff;
+}
+
+.p-menu-item-icon,
+.p-menu-item-label {
+    font-size: 13px;
+}
+
+.p-menu-item {
+    padding: 4px 0px;
+}
+
+.p-menu-item:hover,
+.p-menu-item-content:hover {
+    background: #ffffff05!important;
 }
 
 .p-menubar-submenu,
+.p-menubar-item-active > .p-menubar-item-content,
 .p-menubar-item-content:focus,
 .p-menubar-item-content:target,
 .p-menubar-item-content:hover {
@@ -29,6 +46,7 @@ i,
     z-index: 9999;
 }
 
+.p-menubar-submenu:hover,
 .p-menubar-submenu {
     margin-top: 10px!important;
     background: #191b24!important;
@@ -36,14 +54,14 @@ i,
     border: none!important
 }
 
+.p-menu-item-icon,
+.p-menu-item-label,
 .p-button-label {
     font-weight: 700!important;
 }
 
 .p-button:hover {
-    background: linear-gradient(248.28deg, #9e61ff 9.54%, rgba(142, 97, 255, 0) 32.8%), radial-gradient(81.71% 279.87% at -16.57% -92%, #619bff 28.69%, rgba(205, 219, 248, 0) 69.54%), #6c52ee!important;
-    opacity: 0.9!important;
-    border: none!important;
+    opacity: 0.8!important;
 }
 
 .p-password {
