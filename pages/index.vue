@@ -10,6 +10,7 @@ import SectionContainer from '~/components/atoms/SectionContainer.vue';
 import MovieList from '~/components/molecules/MovieList.vue';
 import RankingContainer from '~/components/molecules/RankingContainer.vue';
 import { useWindowWidth } from '@/composables/resize/windowWidth';
+import WatchContinuteList from '~/components/molecules/WatchContinuteList.vue';
 
 const slides = ref([
   {
@@ -232,7 +233,10 @@ useSwiper(swiperCreativeRef, {
         </ClientOnly>
       </div>
     </div>
-    <Box :style="{ padding: '0px 50px' }">
+    <Box :style="{ padding: '0px 50px', marginBottom: '60px' }">
+      <SectionContainer :title="'Xem tiếp'">
+        <WatchContinuteList :data="slides"/>
+      </SectionContainer>
       <SectionContainer :title="'Bảng xếp hạng'" :style="{display: screenWidth <= 900 ? 'none' : 'flex'}">
         <RankingContainer :data="slides"/>
       </SectionContainer>

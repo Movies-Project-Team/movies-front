@@ -39,8 +39,20 @@ const initialValues = ref({
 
 const schema = computed(() =>
   z.object({
-    email: z.string().trim().min(1, { message: COMMON_MESSAGES.required }),
-    password: z.string().trim().min(1, { message: COMMON_MESSAGES.required }),
+    email: z
+      .string()
+      .trim()
+      .min(1, { message: COMMON_MESSAGES.required })
+      .refine(() => {
+          return !checkPassword.value;
+      }, { message: 'Sai thông tin đăng nhập.' }),
+    password: z
+      .string()
+      .trim()
+      .min(1, { message: COMMON_MESSAGES.required })
+      .refine(() => {
+          return !checkPassword.value;
+      }, { message: 'Sai thông tin đăng nhập.' }),
     rememberLogin: z.boolean().default(false).optional(),
   })
 );
@@ -48,6 +60,8 @@ const schema = computed(() =>
 const resolver = computed(() => zodResolver(schema.value));
 const loginMutation = useLogin();
 const registerMutation = useRegister();
+const checkPassword = ref(false);
+const formRef = ref();
 
 const onSubmit = (data: any, closeCallback: Function) => {
   const mutation = isLogin.value ? loginMutation : registerMutation;
@@ -63,6 +77,17 @@ const onSubmit = (data: any, closeCallback: Function) => {
         isActive.value = localStorage.getItem('isActive');
       }
     },
+    onError: (error) => {
+      checkPassword.value = true;
+      
+      nextTick(() => {
+        formRef.value?.validate();
+      });
+
+      setTimeout(() => {
+        checkPassword.value = false;
+      }, 500);
+    }
   });
 };
 </script>
@@ -118,7 +143,8 @@ const onSubmit = (data: any, closeCallback: Function) => {
               <span>or</span>
             </Box>
           </Flex>
-          <Form 
+          <Form
+            ref="formRef"
             v-slot="$form"
             :initialValues
             :resolver="resolver"

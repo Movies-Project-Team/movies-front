@@ -23,17 +23,40 @@ const props = defineProps<{
     >
       {{ pos }}.
     </Box>
-    <img 
-      :src="data.poster" 
-      :alt="data.poster" 
-      :style="{ 
-        width: isVer2 ? '40px' : '221px',
-        borderRadius: isVer2 ? '0px' : '8px'
-      }"
-    >
+    <Box :style="{ position: 'relative' }">
+      <img 
+        :src="data.poster" 
+        :alt="data.poster" 
+        :style="{ 
+          width: isVer2 ? '25px' : '221px',
+          borderRadius: isVer2 ? '0px' : '8px'
+        }"
+      >
+      <Box
+        v-if="!isVer2"
+        :style="{
+          position:'absolute',
+          bottom: '15px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          overflow: 'hidden',
+          background: '#5e6070',
+          borderRadius: '.3rem .3rem 0 0',
+          boxShadow: '0 0 5px 2px rgba(0, 0, 0, .1)',
+          padding: '0 6px'
+        }"
+      >
+        <h1 
+          :style="{
+            textAlign: 'center',
+            fontSize: '10px'
+          }"
+        >P.Đề</h1>
+      </Box>
+    </Box>
     <h4 
       :style="{ 
-        fontSize: isVer2 ? '12px' : '16px',
+        fontSize: isVer2 ? '12px' : '14px',
       }"
     >
       {{ data.title }}

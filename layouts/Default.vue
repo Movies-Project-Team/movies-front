@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from '@/components/molecules/Header.vue';
+import Footer from '@/components/molecules/Footer.vue';
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import Header from '@/components/molecules/Header.vue';
       }"
     />
     <slot />
+    <Footer />
   </div>
 </template>
 
