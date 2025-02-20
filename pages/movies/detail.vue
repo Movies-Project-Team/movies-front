@@ -118,9 +118,9 @@ import DetailInfoTab from '~/components/molecules/DetailInfoTab.vue';
         <Box 
           :style="{
             position: 'absolute',
-            width: '120%',
+            width: '100%',
             height: '100%',
-            left: '-35px',
+            left: '4px',
             bottom: '40px',
             background: 'linear-gradient(179deg, rgba(25, 27, 36, 0) 1%, rgba(25, 27, 36, 0.2) 10%, rgba(25, 27, 36, 0.5) 40%, rgba(25, 27, 36, 0.7) 50%, rgba(25, 27, 36, 0.85) 65%, rgba(25, 27, 36, 0.95) 80%, rgb(25, 27, 36) 100%)'
           }"
