@@ -15,10 +15,10 @@ import WatchContinuteList from '~/components/molecules/WatchContinuteList.vue';
 const slides = ref([
   {
     id: 1,
-    src: 'https://image.tmdb.org/t/p/original/fYnEbgoNCxW9kL0IgOgtJb9JTBU.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/5qGIxdEO841C0tdY8vOdLoRVrr0.jpg',
+    src: 'https://image.tmdb.org/t/p/original/odVlTMqPPiMksmxpN9cCbPCjUPP.jpg',
+    poster: 'https://image.tmdb.org/t/p/original/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg',
     alt: 'Slide 1',
-    title: 'Nosferatu',
+    title: 'Solo Leveling',
     imdb: 8.5,
     model: 'T16',
     releaseYear: 2023,

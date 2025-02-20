@@ -11,7 +11,18 @@ export default <RouterConfig>{
           name: 'home',
           path: '',
           component: () => import('~/pages/index.vue'),
-        }
+        },
+        {
+          name: 'phim',
+          path: 'phim',
+          children: [
+            {
+              name: 'movies-detail',
+              path: ':title',
+              component: () => import('@/pages/movies/detail.vue'),
+            }
+          ]
+        },
       ]
     },
   ], 

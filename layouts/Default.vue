@@ -16,7 +16,6 @@ import Footer from '@/components/molecules/Footer.vue';
       }"
     />
     <slot />
-    <Footer />
   </div>
 </template>
 
