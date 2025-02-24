@@ -8,7 +8,7 @@ import Footer from '@/components/molecules/Footer.vue';
     <Header 
       :style="{
         position: 'absolute',
-        zIndex: '9999',
+        zIndex: '9998',
         top: '0',
         left: '0',
         marginLeft: 'auto',

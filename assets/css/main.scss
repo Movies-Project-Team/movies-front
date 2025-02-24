@@ -83,3 +83,51 @@ i,
 .p-tabs {
     width: 1080px;
 }
+
+.p-autocomplete-input {
+    width: 368px;
+    height: 2.8rem;
+    border-radius: 0.4rem;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0.4rem 3rem;
+    line-height: 2rem;
+    color: #fff!important;
+    background: #22242c!important;
+    border: 1px solid #444;
+    padding: 0px 40px!important;
+}
+
+.p-inputicon {
+    z-index: 100;
+    top: 47%;
+}
+
+.p-autocomplete-option,
+.p-autocomplete-overlay {
+    background-color: rgba(15, 17, 26, .95)!important;
+    border: none!important;
+    color: #ffffff!important;
+}
+
+.p-autocomplete-list-container::-webkit-scrollbar {
+    width: 6px;
+    background-color: #aaa!important;
+}
+
+.p-autocomplete-list-container::-webkit-scrollbar-thumb {
+    border-radius: 20px!important;
+    background: rgba(15, 17, 26, .95)!important;
+}
+
+.p-autocomplete-option:hover {
+    background: #ffffff05!important;
+}
+
+.p-divider {
+    margin: 0px 8px!important;
+}
+
+.p-divider-vertical:before {
+    border-inline-start: 1px solid #aaa!important;
+}

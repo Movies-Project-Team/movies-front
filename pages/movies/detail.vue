@@ -9,8 +9,7 @@ import DetailInfoTab from '~/components/molecules/DetailInfoTab.vue';
 <template>
   <Box
     :style="{
-      height: '100vh',
-      padding: '150px 70px 0px'
+      padding: '150px 70px 100px'
     }"
   >
     <Flex gap="60px">
