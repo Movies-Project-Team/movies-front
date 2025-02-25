@@ -23,6 +23,11 @@ export default <RouterConfig>{
             }
           ]
         },
+        {
+          name: 'tim-kiem',
+          path: 'tim-kiem',
+          component: () => import('@/pages/movies/search.vue'),
+        },
       ]
     },
   ], 

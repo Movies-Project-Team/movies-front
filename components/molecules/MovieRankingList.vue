@@ -11,7 +11,7 @@ const props = defineProps<{
 <template>
   <ClientOnly>
     <Flex direction="column" align="flex-start" justify="flex-start">
-      <Box v-for="(movie, index) in data.slice(0, 5)" :style="{ width: '100%', padding: '8px 0px' }">
+      <Box v-for="(movie, index) in data.slice(0, 5)" :key="index" :style="{ width: '100%', padding: '8px 0px' }">
         <MovieCard :data="movie" :is-ver2="true" :pos="index + 1" :key="movie.id"/>
       </Box>
     </Flex>

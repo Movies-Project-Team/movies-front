@@ -32,6 +32,9 @@ const items = ref([
     items: languageData
   },
   {
+    label: 'Tìm kiếm',
+  },
+  {
     label: 'Diễn viên',
   },
   {

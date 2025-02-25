@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Header from '@/components/molecules/Header.vue';
 import Footer from '@/components/molecules/Footer.vue';
+import Box from '~/components/atoms/Box.vue';
 </script>
 
 <template>
@@ -15,7 +16,8 @@ import Footer from '@/components/molecules/Footer.vue';
         marginRight: 'auto',
       }"
     />
-    <slot />
+      <slot />
+    <Footer />
   </div>
 </template>
 

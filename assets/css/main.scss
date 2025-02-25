@@ -131,3 +131,18 @@ i,
 .p-divider-vertical:before {
     border-inline-start: 1px solid #aaa!important;
 }
+
+.p-fieldset-legend,
+.p-fieldset {
+    background: #191b24!important;
+}
+
+.p-fieldset {
+    border-color: #ffffff10!important;
+}
+
+.p-fieldset-legend-label {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+}
