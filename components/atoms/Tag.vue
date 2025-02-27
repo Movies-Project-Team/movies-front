@@ -4,7 +4,7 @@ import Box from './Box.vue';
 const props = defineProps<{
   content: string | number,
   subContent?: string | number,
-  type?: 'imdb' | 'background' | 'classic' | 'topic'
+  type?: 'imdb' | 'background' | 'classic' | 'topic' | string | undefined
 }>();
 
 const tagClass = computed(() => {

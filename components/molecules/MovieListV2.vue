@@ -3,7 +3,7 @@ import Flex from '../atoms/Flex.vue';
 import MovieCard from '../atoms/MovieCard.vue';
 
 const props = defineProps<{
-  data: Movie[];
+  data: Movie[] | MovieTmdb[];
 }>();
 </script>
 

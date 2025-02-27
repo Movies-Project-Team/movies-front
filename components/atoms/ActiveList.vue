@@ -10,7 +10,7 @@ const props = defineProps<{
   };
 }>();
 
-const activeItem = ref<number | null>(null);
+const activeItem = ref<number | null>(0);
 const setActive = (index: number) => {
   activeItem.value = index;
 };
@@ -19,15 +19,18 @@ const setActive = (index: number) => {
 <template>
   <Box>
     <Flex gap="40px" :style="{ padding: '16px 20px', fontSize: '15px' }">
-      <span :style="{ color: '#ffffff', fontWeight: 700, width: '150px' }">{{ data.label }}: </span> 
-      <Flex gap="20px">
+      <Box :style="{ width: '10%' }">
+        <span :style="{ color: '#ffffff', fontWeight: 700 }">{{ data.label }}: </span> 
+      </Box>
+      <Flex gap="20px" wrap="wrap" :style="{ width: '90%' }">
         <span
           v-for="(item, index) in data.items"
           :key="index"
           @click="setActive(index)"
           :style="{
             color: activeItem === index ? 'yellow' : '#fff',
-            opacity: activeItem === index ? '1' : '.8'
+            opacity: activeItem === index ? '1' : '.8',
+            cursor: 'pointer'
           }"
         >
           {{ item }}

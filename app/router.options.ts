@@ -24,9 +24,19 @@ export default <RouterConfig>{
           ]
         },
         {
+          name: 'xem-phim',
+          path: 'xem-phim',
+          component: () => import('~/pages/movies/watch.vue'),
+        },
+        {
           name: 'tim-kiem',
           path: 'tim-kiem',
           component: () => import('@/pages/movies/search.vue'),
+        },
+        {
+          name: 'sap-chieu',
+          path: 'sap-chieu',
+          component: () => import('~/pages/movies/upcoming.vue'),
         },
       ]
     },

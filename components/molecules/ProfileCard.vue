@@ -11,7 +11,7 @@ const isOpenPasswordModal = ref(false);
 
 <template>
   <Flex direction="column" align="center" gap="8px" :style="{ width: '10rem', overflow: 'hidden', cursor: 'pointer' }" @click="isOpenPasswordModal = true">
-    <img 
+    <NuxtImg 
       src="https://www.goldderby.com/wp-content/uploads/2022/11/Wednesday-Netflix-cast-Jenna-Ortega.jpg?w=620" 
       alt=""
       :style="{
@@ -19,7 +19,7 @@ const isOpenPasswordModal = ref(false);
         height: '120px',
         objectFit: 'cover'
       }"
-    >
+    />
     <span :style="{ fontWeight: '700' }">{{ profile.name }}</span>
   </Flex>
   <PasswordProfileModal 

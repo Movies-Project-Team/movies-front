@@ -109,7 +109,7 @@ const onSubmit = (data: any, closeCallback: Function) => {
       <template #container="{ closeCallback }">
         <Flex direction="column" gap="20px">
           <Flex direction="column" gap="10px" align="center">
-            <img src="https://streamvid.jwsuperthemes.com/wp-content/uploads/2023/02/logo_sin.svg" alt="" :style="{ width: '40px', height: '40px' }">
+            <NuxtImg src="https://streamvid.jwsuperthemes.com/wp-content/uploads/2023/02/logo_sin.svg" alt="" :style="{ width: '40px', height: '40px' }" />
             <h5
               :style="{
                 color: '#00031C',

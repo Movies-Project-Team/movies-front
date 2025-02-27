@@ -57,18 +57,17 @@ export default defineNuxtConfig({
   },
   buildModules: ['@nuxt/image'],
   image: {
-    provider: 'netlify',
-    domains: ['https://image.tmdb.org/t/p/original'],
-    netlify: {
-      baseURL: 'https://image.tmdb.org/t/p/original', 
-    },
+
   },
   runtimeConfig: {
     public: {
       apiBaseUrl: {
         base: 'https://dummyjson.com',
-        reBase: 'http://127.0.0.1:8000/api/v1/client'
+        reBase: 'http://127.0.0.1:8000/api/v1/client',
+        tmdb: 'https://api.themoviedb.org/3',
       },
+      tmdbApiKey: process.env.TMDB_API_KEY,
+      imageTmdbDomain: 'https://image.tmdb.org/t/p/original'
     }
   },
 })

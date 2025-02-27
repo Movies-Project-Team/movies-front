@@ -3,15 +3,55 @@ import Box from './Box.vue';
 import Flex from './Flex.vue';
 
 const props = defineProps<{
-  data: Movie;
+  data: Movie | MovieTmdb;
   isVer2?: boolean
   pos?: number
 }>();
 
+const config = useRuntimeConfig();
+const isMovie = (data: Movie | MovieTmdb): data is Movie => {
+  return (data as Movie).slug !== undefined;
+};
+
+const router = useRouter();
+const goToDetail = () => {
+  if (isMovie(props.data)) {
+    router.push(`/phim/${props.data.slug}`);
+  }
+};
+
+const defaultPoster = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/film-error-12036009-9808452.png?f=webp&w=256';
+
+const imageSrc = computed(() => {
+  if (isMovie(props.data)) {
+    return props.data.poster || defaultPoster;
+  }
+  return props.data.poster_path ? `${config.public.imageTmdbDomain}/${props.data.poster_path}` : defaultPoster;
+});
+
+const formattedReleaseDate = computed(() => {
+  if (!isMovie(props.data) && props.data.release_date) {
+    const date = new Date(props.data.release_date);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+  return '';
+});
+
 </script>
 
 <template>
-  <Flex :direction="isVer2 ? 'row' : 'column'" align="center" :justify="isVer2 ? 'flex-start' : 'center'" gap="12px">
+  <Flex 
+    align="center" 
+    gap="12px" 
+    @click="goToDetail"
+    :direction="isVer2 ? 'row' : 'column'" 
+    :justify="isVer2 ? 'flex-start' : 'center'" 
+    :style="{ cursor: 'pointer' }"
+    
+  >
     <Box
       :style="{
         fontWeight: '700',
@@ -24,14 +64,19 @@ const props = defineProps<{
       {{ pos }}.
     </Box>
     <Box :style="{ position: 'relative' }">
-      <img 
-        :src="data.poster" 
-        :alt="data.poster" 
+      <NuxtImg 
+        :src="imageSrc" 
+        :alt="data.title"
+        format="webp"
+        loading="lazy"
         :style="{ 
           width: isVer2 ? '25px' : '221px',
-          borderRadius: isVer2 ? '0px' : '8px'
+          borderRadius: isVer2 ? '0px' : '8px',
+          minHeight: isVer2 ? '0px' : '330px'
         }"
-      >
+        @mouseover="(e: any) => e.currentTarget.style.opacity = '0.7'"
+        @mouseleave="(e: any) => e.currentTarget.style.opacity = '1'"
+      />
       <Box
         v-if="!isVer2"
         :style="{
@@ -57,10 +102,14 @@ const props = defineProps<{
     <h4 
       :style="{ 
         fontSize: isVer2 ? '12px' : '14px',
+        margin: '0px'
       }"
     >
       {{ data.title }}
     </h4>
+    <p v-if="!isMovie(props.data)" :style="{ fontSize: '14px', opacity: 0.6, margin: '0px' }">
+      {{ formattedReleaseDate }}
+    </p>
   </Flex>
 </template>
 

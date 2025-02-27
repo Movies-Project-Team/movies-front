@@ -11,8 +11,10 @@ type Routes = {
 type Movie = {
   id: number;
   title: string;
+  original_title: string;
   src: string;
   poster: string;
+  slug: string;
   alt: string;
   imdb: number;
   model: string;
@@ -20,6 +22,15 @@ type Movie = {
   totalEpisodes: number;
   genres: string[];
   description: string;
+};
+
+type MovieTmdb = {
+  id: number;
+  title: string;
+  original_title: string;
+  poster_path: string;
+  release_date: string;
+  overview: string;
 };
 
 type Profile = {
@@ -60,4 +71,11 @@ type UserData = {
 type LoginResponse = {
   data: UserData,
   token: string
+}
+
+type MovieTmdbResponse = {
+  page: number,
+  results: Movie[],
+  total_pages: number,
+  total_results: number
 }

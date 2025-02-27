@@ -13,7 +13,7 @@ import Flex from './Flex.vue';
     }"
     direction="column"
   >
-    <img 
+    <NuxtImg 
       src="https://image.tmdb.org/t/p/w500/nsrFjmDDzo4FDMhxyvuVk4mPEH3.jpg" 
       alt="" 
       :style="{ 
@@ -22,7 +22,7 @@ import Flex from './Flex.vue';
         height: '100%',
         maskImage: 'linear-gradient(0deg, transparent 0, #000 60px)',
         borderRadius: '8px',
-      }">
+      }" />
     <Flex direction="column" align="center" :style="{ color: '#ffffff', marginTop: '-40px', zIndex: '100', fontSize: '14px' }">
       <span :style="{ lineHeight: '30px' }">Taito Ban</span>
       <span>Shun Mizushino (voice)</span>

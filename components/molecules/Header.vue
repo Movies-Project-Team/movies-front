@@ -7,13 +7,7 @@ import MultiProfileModal from "@/components/molecules/modal/MultiProfileModal.vu
 import { getCookie } from "~/utils/cookie";
 import { logout } from "~/utils";
 import Fuse from "fuse.js";
-
-interface SearchItem {
-  name: string;
-  original_name: string;
-  type: string;
-  image: string;
-}
+import { MovieService } from "~/services/DummnyDataMovie";
 
 const router = useRouter();
 const isOpenModal = ref(false);
@@ -64,63 +58,14 @@ const toggle = (event: any) => {
 };
 
 const searchQuery = ref("");
-const suggestions = ref<SearchItem[]>([]);
+const suggestions = ref<Movie[]>([]);
 
-const itemsSearch = ref<SearchItem[]>([
-  {
-    name: "Thăng Cấp Một Mình",
-    original_name: "Solo Leveling",
-    type: "Phim",
-    image:
-      "https://image.tmdb.org/t/p/original/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg",
-  },
-  {
-    name: "Nhím Sonic 3",
-    original_name: "Sonic the Hedgehog 3",
-    type: "Phim",
-    image:
-      "https://image.tmdb.org/t/p/original/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
-  },
-  {
-    name: "Tình báo tái xuất",
-    original_name: "Back in Action",
-    type: "Phim",
-    image:
-      "https://image.tmdb.org/t/p/original/3L3l6LsiLGHkTG4RFB2aBA6BttB.jpg",
-  },
-  {
-    name: "Cắt Rời Ký Ức",
-    original_name: "Severance",
-    type: "Phim",
-    image:
-      "https://image.tmdb.org/t/p/original/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg",
-  },
-  {
-    name: "Tẩy Trắng",
-    original_name: "Drifting Away",
-    type: "Phim",
-    image:
-      "https://image.tmdb.org/t/p/original/bEcFBnDwUXXDizdaR5EiC0qRhS3.jpg",
-  },
-  {
-    name: "Kraven: Thợ Săn Thủ Lĩnh",
-    original_name: "Kraven the Hunter.",
-    type: "Diễn viên",
-    image:
-      "https://image.tmdb.org/t/p/original/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
-  },
-  {
-    name: "Silo",
-    original_name: "Silo",
-    type: "Diễn viên",
-    image: "https://image.tmdb.org/t/p/original/tlliQuCupf8fpTH7RAor3aKMGy.jpg",
-  },
-]);
+const itemsSearch = ref<Movie[]>(MovieService.getMovieData());
 
 const fuse = computed(
   () =>
     new Fuse(itemsSearch.value, {
-      keys: ["name", "original_name"],
+      keys: ["title", "original_title"],
       threshold: 0.4,
       findAllMatches: true,
       ignoreLocation: true,
@@ -181,8 +126,8 @@ const goToDetail = () => {
           >
             <template #option="slotProps">
               <Flex gap="10px" @click="goToDetail()">
-                <img
-                  :src="slotProps.option.image"
+                <NuxtImg
+                  :src="slotProps.option.poster"
                   alt="icon"
                   :style="{
                     width: '50px',
@@ -197,10 +142,10 @@ const goToDetail = () => {
                   align="flex-start"
                 >
                   <h4 :style="{ fontSize: '12px', margin: '0px' }">
-                    {{ slotProps.option.name }}
+                    {{ slotProps.option.title }}
                   </h4>
                   <h4 :style="{ fontSize: '12px', margin: '0px' }">
-                    {{ slotProps.option.original_name }}
+                    {{ slotProps.option.original_title }}
                   </h4>
                   <Flex :style="{ fontSize: '12px', color: '#aaa' }"
                     >T16 <Divider layout="vertical" /> Phần 1

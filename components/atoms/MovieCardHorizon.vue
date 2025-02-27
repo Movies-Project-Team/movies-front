@@ -12,7 +12,7 @@ const props = defineProps<{
   <Flex 
     :direction="'column'"
   >
-    <img 
+    <NuxtImg 
       :src="data.src" 
       :alt="data.src" 
       :style="{
@@ -21,7 +21,7 @@ const props = defineProps<{
         borderRadius: '8px',
         objectFit: 'cover'
       }"
-    >
+    />
     <h4 
       :style="{ 
         fontSize: '14px',
