@@ -6,10 +6,8 @@ import AuthModal from "./modal/AuthModal.vue";
 import MultiProfileModal from "@/components/molecules/modal/MultiProfileModal.vue";
 import { getCookie } from "~/utils/cookie";
 import { logout } from "~/utils";
-import Fuse from "fuse.js";
-import { MovieService } from "~/services/DummnyDataMovie";
+import { useGetListMovie } from "~/composables/api/movies/use-get-list-movie";
 
-const router = useRouter();
 const isOpenModal = ref(false);
 const isLoginSuccess = ref(false);
 const cookieAuth = getCookie("access_token");
@@ -59,30 +57,23 @@ const toggle = (event: any) => {
 
 const searchQuery = ref("");
 const suggestions = ref<Movie[]>([]);
+const params = ref({
+  "item": 10,
+  "keyword": '',
+});
+const { data, refetch } = useGetListMovie(params);
 
-const itemsSearch = ref<Movie[]>(MovieService.getMovieData());
-
-const fuse = computed(
-  () =>
-    new Fuse(itemsSearch.value, {
-      keys: ["title", "original_title"],
-      threshold: 0.4,
-      findAllMatches: true,
-      ignoreLocation: true,
-      includeScore: true,
-    })
-);
-
-const search = (event: any) => {
+const search = async (event: any) => {
   const query = event.query.toLowerCase().trim();
-  const result = fuse.value.search(query);
+  params.value.keyword = query;
 
-  suggestions.value = result.length > 0 ? result.map((res :any) => res.item) : [];
-};
-
-const goToDetail = () => {
-  router.push(`/phim/asdasd`);
-  searchQuery.value = '';
+  if (!query) {
+    suggestions.value = [];
+    return;
+  }
+  
+  await refetch();
+  suggestions.value = data.value?.data ?? [];
 };
 </script>
 
@@ -121,38 +112,42 @@ const goToDetail = () => {
             v-model="searchQuery"
             :suggestions="suggestions"
             @complete="search"
-            @item-select="goToDetail"
             placeholder="Tìm kiếm phim, diễn viên"
           >
             <template #option="slotProps">
-              <Flex gap="10px" @click="goToDetail()">
-                <NuxtImg
-                  :src="slotProps.option.poster"
-                  alt="icon"
-                  :style="{
-                    width: '50px',
-                    height: '100%',
-                    objectFit: 'cover',
-                  }"
-                />
-                <Flex
-                  direction="column"
-                  gap="14px"
-                  justify="center"
-                  align="flex-start"
-                >
-                  <h4 :style="{ fontSize: '12px', margin: '0px' }">
-                    {{ slotProps.option.title }}
-                  </h4>
-                  <h4 :style="{ fontSize: '12px', margin: '0px' }">
-                    {{ slotProps.option.original_title }}
-                  </h4>
-                  <Flex :style="{ fontSize: '12px', color: '#aaa' }"
-                    >T16 <Divider layout="vertical" /> Phần 1
-                    <Divider layout="vertical" /> 12 Tập</Flex
+              <NuxtLink :to="`/phim/${slotProps.option.slug}`" style="text-decoration: none; color: inherit;">
+                <Flex gap="10px">
+                  <NuxtImg
+                    :src="slotProps.option.thumbnail"
+                    alt="icon"
+                    :style="{
+                      width: '50px',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }"
+                  />
+                  <Flex
+                    direction="column"
+                    gap="14px"
+                    justify="center"
+                    align="flex-start"
                   >
+                    <h4 :style="{ fontSize: '12px', margin: '0px' }">
+                      {{ slotProps.option.title }}
+                    </h4>
+                    <h4 :style="{ fontSize: '12px', margin: '0px' }">
+                      {{ slotProps.option.name }}
+                    </h4>
+                    <Flex :style="{ fontSize: '12px', color: '#aaa' }">
+                      {{ slotProps.option.year }} 
+                      <Divider layout="vertical" />
+                      {{ slotProps.option.lang }}
+                      <Divider layout="vertical" />
+                      {{ slotProps.option.esp_total.replace('Tập', '').trim() }} Tập
+                    </Flex>
+                  </Flex>
                 </Flex>
-              </Flex>
+              </NuxtLink>
             </template>
             <template #header>
               <div

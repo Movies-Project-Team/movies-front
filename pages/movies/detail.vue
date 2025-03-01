@@ -4,6 +4,13 @@ import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
 import DetailInfoTab from '~/components/molecules/DetailInfoTab.vue';
 
+const props = defineProps<{
+  data: {
+    label: string;
+    items: string[];
+  };
+}>();
+
 const tagItems = [
   { content: 7.1, subContent: "IMBd", type: "imdb" },
   { content: "T12", type: "background" },

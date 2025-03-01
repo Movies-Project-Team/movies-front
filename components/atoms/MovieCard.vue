@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Box from './Box.vue';
 import Flex from './Flex.vue';
+import { formatDate } from '~/utils/date';
 
 const props = defineProps<{
   data: Movie | MovieTmdb;
@@ -30,14 +31,9 @@ const imageSrc = computed(() => {
 });
 
 const formattedReleaseDate = computed(() => {
-  if (!isMovie(props.data) && props.data.release_date) {
-    const date = new Date(props.data.release_date);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  }
-  return '';
+  return !isMovie(props.data) && props.data.release_date
+    ? formatDate(new Date(props.data.release_date), "DD-MM-YYYY")
+    : "";
 });
 
 </script>

@@ -79,3 +79,17 @@ type MovieTmdbResponse = {
   total_pages: number,
   total_results: number
 }
+
+type Paginate = {
+  totalItems: number,
+  currentPage: number,
+  totalPages: number,
+  totalItemsPerPage: number
+}
+
+type MovieResponse = {
+  code: number,
+  message: string,
+  data: Movie[],
+  paginate: Paginate,
+}

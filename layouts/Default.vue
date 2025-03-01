@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Header from '@/components/molecules/Header.vue';
 import Footer from '@/components/molecules/Footer.vue';
-import Box from '~/components/atoms/Box.vue';
 </script>
 
 <template>
   <div>
+  <ClientOnly>
     <Header 
       :style="{
         position: 'absolute',
@@ -18,6 +18,7 @@ import Box from '~/components/atoms/Box.vue';
     />
       <slot />
     <Footer />
+  </ClientOnly>
   </div>
 </template>
 
