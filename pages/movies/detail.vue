@@ -3,21 +3,38 @@ import Box from '~/components/atoms/Box.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
 import DetailInfoTab from '~/components/molecules/DetailInfoTab.vue';
+import { useGetMovie } from '~/composables/api/movies/use-get-movie';
 
-const props = defineProps<{
-  data: {
-    label: string;
-    items: string[];
-  };
-}>();
+const route = useRoute();
+const slug = computed(() => 
+  Array.isArray(route.params.title) ? route.params.title[0] : route.params.title
+);
+const { data } = useGetMovie(slug);
+const movie = computed<Movie>(() => data.value?.data ?? ({} as Movie));
+const plainDescription = computed(() => {
+  return (movie.value.description || '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .trim();
+});
 
-const tagItems = [
-  { content: 7.1, subContent: "IMBd", type: "imdb" },
+const tagItems = computed(() => [
+  { content: movie.value.vote_average ?? "N/A", subContent: "IMBd", type: "imdb" },
   { content: "T12", type: "background" },
-  { content: 2024 },
-  { content: "Phần 1" },
-  { content: "Tập 12" }
-];
+  { content: movie.value.year ?? "N/A" },
+  { 
+    content: movie.value.season 
+      ? `Phần ${movie.value.season}` 
+      : "Chưa cập nhật" 
+  },
+  { 
+    content: movie.value.esp_total 
+      ? movie.value.esp_total.toString().includes("Tập") 
+        ? movie.value.esp_total 
+        : `Tập ${movie.value.esp_total}` 
+      : "Chưa cập nhật" 
+  }
+]);
 
 const genreItems = [
   { content: "Hành Động", type: "topic" },
@@ -48,7 +65,7 @@ const genreItems = [
             margin: '10px 0px!important'
           }"
         >
-          Captain America: Thế Giới Mới
+          {{ movie?.title ?? 'Chưa có tiêu đề' }}
         </h1>
         <Flex
           gap="10px"
@@ -80,7 +97,7 @@ const genreItems = [
         <Flex direction="column" gap="10px">
           <p :style="{ margin: '4px 0px!important' }">
             <span :style="{ fontWeight: '700' }">Đạo diễn: </span>
-            Chưa cập nhật
+            {{ movie.produce_by ?? "Chưa cập nhật" }}
           </p>
           <p :style="{ margin: '4px 0px!important' }">
             <span :style="{ fontWeight: '700' }">Diễn viên: </span>
@@ -90,7 +107,7 @@ const genreItems = [
         <Box>
           <p :style="{ margin: '4px 0px!important' }">
             <span :style="{ fontWeight: '700' }">Giới thiệu: </span>
-            Sau khi gặp Tổng thống Hoa Kỳ mới đắc cử Thaddeus Ross, Sam Wilson thấy mình bị cuốn vào một sự cố . Anh phải khám phá lý do đằng sau một âm mưu cực kì xấu xa trước khi kẻ chủ mưu thật sự khiến cả thế giới phải hoảng sợ
+            {{ plainDescription }}
           </p>
         </Box>
         <Flex :style="{ marginTop: '20px' }" gap="10px">
@@ -152,7 +169,7 @@ const genreItems = [
             width: '100%',
           }"
         >
-          <NuxtImg src="http://image.tmdb.org/t/p/original/qfAfE5auxsuxhxPpnETRAyTP5ff.jpg" alt="" :style="{ width: '100%', height: '90%' }" />
+          <NuxtImg :src="movie.poster" alt="" :style="{ width: '100%', height: '90%' }" />
         </Box>
       </Flex>
     </Flex>

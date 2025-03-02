@@ -75,6 +75,10 @@ const search = async (event: any) => {
   await refetch();
   suggestions.value = data.value?.data ?? [];
 };
+
+const clearInput = () => {
+  searchQuery.value = "";
+};
 </script>
 
 <template>
@@ -113,6 +117,7 @@ const search = async (event: any) => {
             :suggestions="suggestions"
             @complete="search"
             placeholder="Tìm kiếm phim, diễn viên"
+            @item-select="clearInput"
           >
             <template #option="slotProps">
               <NuxtLink :to="`/phim/${slotProps.option.slug}`" style="text-decoration: none; color: inherit;">

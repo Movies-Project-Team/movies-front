@@ -10,6 +10,7 @@ const props = defineProps<{
 }>();
 
 const config = useRuntimeConfig();
+const movieStore = useMovieStore();
 const isMovie = (data: Movie | MovieTmdb): data is Movie => {
   return (data as Movie).slug !== undefined;
 };
@@ -17,6 +18,7 @@ const isMovie = (data: Movie | MovieTmdb): data is Movie => {
 const router = useRouter();
 const goToDetail = () => {
   if (isMovie(props.data)) {
+    movieStore.setMovieId(props.data.id);
     router.push(`/phim/${props.data.slug}`);
   }
 };

@@ -14,6 +14,12 @@ type Movie = {
   original_title: string;
   src: string;
   poster: string;
+  thumbnail: string;
+  produce_by: string,
+  season: number,
+  vote_average: number,
+  year: number,
+  esp_total: number,
   slug: string;
   alt: string;
   imdb: number;
@@ -92,4 +98,10 @@ type MovieResponse = {
   message: string,
   data: Movie[],
   paginate: Paginate,
+}
+
+type MovieDetailResponse = {
+  code: number,
+  message: string,
+  data: Movie,
 }
