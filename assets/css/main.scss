@@ -10,6 +10,10 @@ body {
     color: #fff
 }
 
+h2 {
+    margin: 0px!important;
+}
+
 i,
 .p-menu-item-icon,
 .p-menu-item-label,
@@ -146,4 +150,9 @@ i,
     color: #ffffff;
     font-weight: 700;
     font-size: 14px;
+}
+
+.p-scrollpanel-bar-y::-webkit-scrollbar-thumb {
+    border-radius: 20px!important;
+    background: rgba(15, 17, 26, .95)!important;
 }

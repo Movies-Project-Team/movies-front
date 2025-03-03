@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import Box from '../atoms/Box.vue';
 import Flex from '../atoms/Flex.vue';
+
+const activeItem = ref<number | null>(0);
+const setActive = (index: number) => {
+  activeItem.value = index;
+};
 </script>
 
 <template>
@@ -10,12 +15,14 @@ import Flex from '../atoms/Flex.vue';
       wrap="wrap"
     >
       <Flex
-        v-for="episode in 20"
+        v-for="(episode, index) in 70"
         justify="center"
         align="center"
-        :key="episode"
+        @click="setActive(index)"
+        :key="index"
         :style="{
-          backgroundColor: '#282b3a',
+          opacity: activeItem === index ? '1' : '.8',
+          backgroundColor: activeItem === index ? '#ffd875' : '#282b3a',
           width: '146px',
           height: '50px',
           borderRadius: '0.5rem',
@@ -30,10 +37,16 @@ import Flex from '../atoms/Flex.vue';
           :style="{
             fontSize: '0.875rem',
             gap: '0.5rem',
-            color: '#ffffff'
+            color: activeItem === index ? '#191b24' : '#fff',
           }"
         >
-          <i class="pi pi-play" style="font-size: 1.25rem"></i>
+          <i 
+            class="pi pi-sort-down-fill" 
+            :style="{
+              fontSize: '1.2rem',
+              color: activeItem === index ? '#191b24' : '#fff',
+              transform: 'rotate(270deg)'
+            }"/>
           Tập: {{ episode }}
         </Flex>
       </Flex>
