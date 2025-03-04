@@ -25,7 +25,7 @@ export default <RouterConfig>{
         },
         {
           name: 'xem-phim',
-          path: 'xem-phim',
+          path: 'xem-phim/:title',
           component: () => import('~/pages/movies/watch.vue'),
         },
         {

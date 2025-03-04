@@ -127,10 +127,15 @@ i,
 
 .p-autocomplete-option:hover {
     background: #ffffff05!important;
+    border-inline-start: 1px solid #aaa!important;
 }
 
 .p-divider {
     margin: 0px 8px!important;
+}
+
+.p-divider-horizontal:before {
+    border-block-start: 1px solid #272932!important;
 }
 
 .p-divider-vertical:before {

@@ -111,7 +111,11 @@ const genreItems = [
           </p>
         </Box>
         <Flex :style="{ marginTop: '20px' }" gap="10px">
-          <Button label="Xem phim" icon="pi pi-play"/>
+          <Button label="Xem phim" icon="pi pi-play">
+            <RouterLink :to="`/xem-phim/${movie.slug}`" :style="{ textDecoration: 'none', fontWeight: 'bold', color: '#ffffff' }">
+              Xem phim
+            </RouterLink>
+          </Button>
           <Button label="Yêu thích" icon="pi pi-heart" :style="{ background: 'rgb(45, 47, 52)', border: 'none' }" />
           <Button label="Xem sau" icon="pi pi-bookmark" :style="{ background: 'rgb(45, 47, 52)', border: 'none' }"  />
         </Flex>

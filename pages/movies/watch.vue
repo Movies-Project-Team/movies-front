@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Box from '~/components/atoms/Box.vue';
+import CommentBox from '~/components/atoms/CommentBox.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
 import EpisodeList from '~/components/molecules/EpisodeList.vue';
+import { MovieService } from '~/services/DummnyDataMovie';
 
 const tagItems = [
   { content: 7.1, subContent: "IMBd", type: "imdb" },
@@ -30,12 +32,93 @@ const setActive = (index: number) => {
 };
 
 const comment = ref('');
+
+const comments = [
+  {
+    avatar: 'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png',
+    name: 'Onyama Limba',
+    time: '11 ngày trước',
+    comment: 'Làm sao để xem phim vậy mọi người? Bấm vào tập nó hiện mỗi cái poster phim xong chả có nút nủng gì ):',
+    replies: [
+      {
+        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png',
+        name: 'Xuxu',
+        time: '10 ngày trước',
+        comment: 'Bấm vào góc phải có nút play đó bạn.',
+        replies: [
+          {
+            avatar: 'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png',
+            name: 'John',
+            time: '9 ngày trước',
+            comment: 'Chắc lỗi trình duyệt rồi.',
+            replies: []
+          }
+        ]
+      },
+      {
+        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png',
+        name: 'Jane',
+        time: '10 ngày trước',
+        comment: 'Bạn thử F5 lại xem sao?',
+        replies: []
+      }
+    ]
+  },
+  {
+    avatar: 'https://primefaces.org/cdn/primevue/images/avatar/xuxuefeng.png',
+    name: 'Michael',
+    time: '7 ngày trước',
+    comment: 'Phim này có vietsub không mọi người?',
+    replies: [
+      {
+        avatar: 'https://primefaces.org/cdn/primevue/images/organization/walter.jpg',
+        name: 'Sarah',
+        time: '6 ngày trước',
+        comment: 'Có sub tiếng Anh thôi nha bạn.',
+        replies: []
+      },
+      {
+        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png',
+        name: 'Tom',
+        time: '5 ngày trước',
+        comment: 'Mình đang tìm vietsub, ai có link share với!',
+        replies: [
+          {
+            avatar: 'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png',
+            name: 'Alice',
+            time: '4 ngày trước',
+            comment: 'Bạn thử lên subscene xem.',
+            replies: []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    avatar: 'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png',
+    name: 'Emily',
+    time: '3 ngày trước',
+    comment: 'Ai biết phim này có bao nhiêu tập không?',
+    replies: [
+      {
+        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png',
+        name: 'David',
+        time: '2 ngày trước',
+        comment: 'Hình như có 16 tập bạn ơi!',
+        replies: []
+      }
+    ]
+  }
+];
+
+const suggestMovie = MovieService.getMovieData();
+
 </script>
 
 <template>
   <Box
     :style="{
-      padding: '150px 70px 100px'
+      padding: '150px 70px 60px'
     }"
   >
   <h2 :style="{ fontSize: '1.25rem', fontWeight: '500' }">
@@ -48,15 +131,15 @@ const comment = ref('');
       </video>
     </vue-plyr>
   </Box>
-  <Flex :style="{ width: '100%' }">
+  <Flex :style="{ width: '100%' }" justify="center">
     <Flex
       direction="column"
       gap="24px"
       :style="{ 
-        width: '1160px', 
-        maxWidth: '1160px',
+        width: '1200px', 
+        maxWidth: '1200px',
         padding: '10px',
-        borderRight: '1px solid #ddd' 
+        borderRight: '1px solid #272932' 
       }"
     >
       <Flex
@@ -183,7 +266,7 @@ const comment = ref('');
         </ScrollPanel>
       </Box>
       <Box>
-        <Flex direction="column" :style="{ marginBottom: '1.5rem!important' }" gap="16px">
+        <Flex direction="column" :style="{ marginBottom: '1.5rem!important' }" gap="24px">
           <Flex align="center" gap="8px">
             <i class="pi pi-comments" />
             <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold' }">Bình luận (12)</h2>
@@ -195,6 +278,17 @@ const comment = ref('');
               <Button type="submit" icon="pi pi-send" label="Gửi" variant="text"/>
             </Flex>
           </IftaLabel>
+          <Flex direction="column" gap="24px">
+            <CommentBox 
+              v-for="comment in comments" 
+              :key="comment.time" 
+              :avatar="comment.avatar" 
+              :name="comment.name" 
+              :time="comment.time" 
+              :comment="comment.comment" 
+              :replies="comment.replies" 
+            />
+          </Flex>
         </Flex>
       </Box>
     </Flex>
@@ -205,6 +299,42 @@ const comment = ref('');
           <p>Robert Downey Jr., Chris Evans, Scarlett Johansson, Mark Ruffalo</p>
         </Box>
       </Box>
+      <NuxtLink v-for="(item, index) in suggestMovie" :key="index" :to="`/phim/${item.slug}`" style="text-decoration: none; color: inherit;">
+        <Flex gap="20px" :style="{ backgroundColor: '#272932', padding: '10px', borderRadius: '8px', marginBottom: '10px' }">
+          <NuxtImg
+            :src="item.poster"
+            alt="icon"
+            :style="{
+              width: '80px',
+              height: '100%',
+              objectFit: 'cover',
+            }"
+          />
+          <Flex
+            direction="column"
+            gap="10px"
+            justify="center"
+            align="flex-start"
+          >
+            <h4 :style="{ fontSize: '12px', margin: '0px' }">
+              {{ item.title }}
+            </h4>
+            <h4 :style="{ fontSize: '12px', margin: '0px' }">
+              {{ item.original_title }}
+            </h4>
+            <Flex :style="{ fontSize: '12px', color: '#aaa' }">
+              {{ item.releaseYear }} 
+              <Divider layout="vertical" />
+              {{ item.model }}
+              <Divider layout="vertical" />
+              {{ item.totalEpisodes }} Tập
+            </Flex>
+            <span :style="{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '2', overflow: 'hidden', fontWeight: 'normal', fontSize: '12px', color: '#aaa' }">
+              {{ item.description }}
+            </span>
+          </Flex>
+        </Flex>
+      </NuxtLink>
     </Box>
   </Flex>
   </Box>
