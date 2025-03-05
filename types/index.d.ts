@@ -105,3 +105,15 @@ type MovieDetailResponse = {
   message: string,
   data: Movie,
 }
+
+type CastTmdb = {
+  name: string;
+  original_name: string;
+  profile_path: string;
+  character: string;
+};
+
+type CreditsTmdbResponse = {
+  id: number;
+  cast: CastTmdb[]
+}

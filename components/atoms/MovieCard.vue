@@ -72,6 +72,7 @@ const formattedReleaseDate = computed(() => {
           borderRadius: isVer2 ? '0px' : '8px',
           minHeight: isVer2 ? '0px' : '330px'
         }"
+        :placeholder="[50, 25, 75, 5]"
         @mouseover="(e: any) => e.currentTarget.style.opacity = '0.7'"
         @mouseleave="(e: any) => e.currentTarget.style.opacity = '1'"
       />

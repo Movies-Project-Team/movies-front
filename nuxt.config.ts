@@ -56,9 +56,9 @@ export default defineNuxtConfig({
     }
   },
   buildModules: ['@nuxt/image'],
-  image: {
-
-  },
+  plugins: [
+    '@/plugins/vue-plyr.client',
+  ],
   runtimeConfig: {
     public: {
       apiBaseUrl: {

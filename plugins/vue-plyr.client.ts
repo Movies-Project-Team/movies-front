@@ -5,7 +5,7 @@ import type { Plugin } from 'vue'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(VuePlyr as unknown as Plugin, {
-    setting: {
+    plyr: {
       controls: [
         'play-large', // Lớn
         'restart', // Bắt đầu lại
@@ -32,6 +32,24 @@ export default defineNuxtPlugin((nuxtApp) => {
       speed: {
         selected: 1,
         options: [0.5, 1, 1.5, 2]
+      },
+      blankVideo: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
+      classNames: {
+        previewThumbnails: {
+          // Tooltip thumbs
+          thumbContainer: 'plyr__preview-thumb',
+          thumbContainerShown: 'plyr__preview-thumb--is-shown',
+          imageContainer: 'plyr__preview-thumb__image-container',
+          timeContainer: 'plyr__preview-thumb__time-container',
+          // Scrubbing
+          scrubbingContainer: 'plyr__preview-scrubbing',
+          scrubbingContainerShown: 'plyr__preview-scrubbing--is-shown',
+        },
+      },
+      // Preview Thumbnails plugin
+      previewThumbnails: {
+        enabled: true,
+        src: 'https://cdn.plyr.io/static/demo/thumbs/100p.vtt',
       },
     }
   })

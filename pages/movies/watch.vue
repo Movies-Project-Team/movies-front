@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Box from '~/components/atoms/Box.vue';
+import CastCircleItem from '@/components/atoms/CastCircleItem.vue';
 import CommentBox from '~/components/atoms/CommentBox.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
 import EpisodeList from '~/components/molecules/EpisodeList.vue';
+import { useGetListCredit } from '@/composables/api/movies/use-get-list-credit';
 import { MovieService } from '~/services/DummnyDataMovie';
 
 const tagItems = [
@@ -110,9 +112,17 @@ const comments = [
     ]
   }
 ];
-
 const suggestMovie = MovieService.getMovieData();
 
+const type = ref("movie");
+const tmdb = ref("tt28607951");
+const { data: credits, refetch } = useGetListCredit(type, tmdb);
+const castList = ref<CastTmdb[]>([]);
+watchEffect(() => {
+  if (credits.value?.cast) {
+    castList.value = credits.value.cast.slice(0, 5);
+  }
+});
 </script>
 
 <template>
@@ -126,7 +136,7 @@ const suggestMovie = MovieService.getMovieData();
   </h2>
   <Box :style="{ width: '100%', height: '900px', position: 'relative', margin: '1rem 0' }">
     <vue-plyr :style="{ width: '100%', height: '100%', position: 'absolute' }">
-      <video ref="videoPlayer" data-poster="https://example.com/poster.jpg" controls width="100%">
+      <video ref="videoPlayer" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" data-poster="https://example.com/poster.jpg" controls playsinline width="100%">
         <p>Your browser does not support HTML5 video.</p>
       </video>
     </vue-plyr>
@@ -294,47 +304,50 @@ const suggestMovie = MovieService.getMovieData();
     </Flex>
     <Box :style="{ width: '440px', maxWidth: '440px', padding: '1rem 2.5rem' }">
       <Box :style="{ width: '100%' }">
-        <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1.5rem' }">Diễn viên</h2>
-        <Box>
-          <p>Robert Downey Jr., Chris Evans, Scarlett Johansson, Mark Ruffalo</p>
-        </Box>
-      </Box>
-      <NuxtLink v-for="(item, index) in suggestMovie" :key="index" :to="`/phim/${item.slug}`" style="text-decoration: none; color: inherit;">
-        <Flex gap="20px" :style="{ backgroundColor: '#272932', padding: '10px', borderRadius: '8px', marginBottom: '10px' }">
-          <NuxtImg
-            :src="item.poster"
-            alt="icon"
-            :style="{
-              width: '80px',
-              height: '100%',
-              objectFit: 'cover',
-            }"
-          />
-          <Flex
-            direction="column"
-            gap="10px"
-            justify="center"
-            align="flex-start"
-          >
-            <h4 :style="{ fontSize: '12px', margin: '0px' }">
-              {{ item.title }}
-            </h4>
-            <h4 :style="{ fontSize: '12px', margin: '0px' }">
-              {{ item.original_title }}
-            </h4>
-            <Flex :style="{ fontSize: '12px', color: '#aaa' }">
-              {{ item.releaseYear }} 
-              <Divider layout="vertical" />
-              {{ item.model }}
-              <Divider layout="vertical" />
-              {{ item.totalEpisodes }} Tập
-            </Flex>
-            <span :style="{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '2', overflow: 'hidden', fontWeight: 'normal', fontSize: '12px', color: '#aaa' }">
-              {{ item.description }}
-            </span>
-          </Flex>
+        <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1.5rem!important' }">Diễn viên</h2>
+        <Flex wrap="wrap">
+          <CastCircleItem v-for="(item, index) in castList" :key="index" :data="item"/>
         </Flex>
-      </NuxtLink>
+      </Box>
+      <Box :style="{ width: '100%' }">
+        <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1.5rem!important' }">Đề xuất</h2>
+        <NuxtLink v-for="(item, index) in suggestMovie" :key="index" :to="`/phim/${item.slug}`" style="text-decoration: none; color: inherit;">
+          <Flex gap="20px" :style="{ backgroundColor: '#272932', padding: '10px', borderRadius: '8px', marginBottom: '10px' }">
+            <NuxtImg
+              :src="item.poster"
+              alt="icon"
+              :style="{
+                width: '80px',
+                height: '100%',
+                objectFit: 'cover',
+              }"
+            />
+            <Flex
+              direction="column"
+              gap="10px"
+              justify="center"
+              align="flex-start"
+            >
+              <h4 :style="{ fontSize: '12px', margin: '0px' }">
+                {{ item.title }}
+              </h4>
+              <h4 :style="{ fontSize: '12px', margin: '0px' }">
+                {{ item.original_title }}
+              </h4>
+              <Flex :style="{ fontSize: '12px', color: '#aaa' }">
+                {{ item.releaseYear }} 
+                <Divider layout="vertical" />
+                {{ item.model }}
+                <Divider layout="vertical" />
+                {{ item.totalEpisodes }} Tập
+              </Flex>
+              <span :style="{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '2', overflow: 'hidden', fontWeight: 'normal', fontSize: '12px', color: '#aaa' }">
+                {{ item.description }}
+              </span>
+            </Flex>
+          </Flex>
+        </NuxtLink>
+      </Box>
     </Box>
   </Flex>
   </Box>

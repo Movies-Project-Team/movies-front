@@ -36,6 +36,8 @@ const tagItems = computed(() => [
   }
 ]);
 
+const posterSrc = computed(() => movie.value.poster || 'https://m.economictimes.com/thumb/msid-104359417,width-1200,height-900,resizemode-4,imgsize-54656/cinema-halls1.jpg')
+
 const genreItems = [
   { content: "Hành Động", type: "topic" },
   { content: "Viễn Tưởng", type: "topic" },
@@ -173,7 +175,7 @@ const genreItems = [
             width: '100%',
           }"
         >
-          <NuxtImg :src="movie.poster" alt="" :style="{ width: '100%', height: '90%' }" />
+          <NuxtImg fit="cover" :src="posterSrc" alt="" :style="{ width: '100%', height: '90%', maxHeight: '480px' }"/>
         </Box>
       </Flex>
     </Flex>

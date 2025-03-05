@@ -161,3 +161,7 @@ i,
     border-radius: 20px!important;
     background: rgba(15, 17, 26, .95)!important;
 }
+
+.p-avatar img {
+    object-fit: cover;
+}
