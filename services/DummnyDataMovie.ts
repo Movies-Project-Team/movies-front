@@ -3,6 +3,7 @@ export const MovieService = {
     return [
       {
         id: 1,
+        tmdb_id: 127532,
         slug: "solo-leveling",
         src: "https://image.tmdb.org/t/p/original/odVlTMqPPiMksmxpN9cCbPCjUPP.jpg",
         poster:
@@ -10,6 +11,7 @@ export const MovieService = {
         alt: "Slide 1",
         title: "Thăng cấp một mình",
         original_title: "Solo Leveling",
+        type: "tv",
         imdb: 8.5,
         model: "T16",
         releaseYear: 2023,
@@ -20,6 +22,7 @@ export const MovieService = {
       },
       {
         id: 2,
+        tmdb_id: 939243,
         slug: "sonic-the-hedgehog-3",
         src: "https://image.tmdb.org/t/p/original/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg",
         poster:
@@ -27,6 +30,7 @@ export const MovieService = {
         alt: "Slide 2",
         title: "Nhím Sonic 3",
         original_title: "Sonic the Hedgehog 3",
+        type: "movie",
         imdb: 9.1,
         model: "T16",
         releaseYear: 2022,
@@ -37,6 +41,7 @@ export const MovieService = {
       },
       {
         id: 3,
+        tmdb_id: 993710,
         slug: "back-in-action",
         src: "https://image.tmdb.org/t/p/original/xZm5YUNY3PlYD1Q4k7X8zd2V4AK.jpg",
         poster:
@@ -44,6 +49,7 @@ export const MovieService = {
         alt: "Slide 3",
         title: "Tình báo tái xuất",
         original_title: "Back in Action",
+        type: "movie",
         imdb: 7.8,
         model: "T16",
         releaseYear: 2021,
@@ -54,6 +60,7 @@ export const MovieService = {
       },
       {
         id: 4,
+        tmdb_id: 95396,
         slug: "severance",
         src: "https://image.tmdb.org/t/p/original/5OsiT39OiZNdD0v2LiAcI2TpSYj.jpg",
         poster:
@@ -61,6 +68,7 @@ export const MovieService = {
         alt: "Slide 4",
         title: "Cắt Rời Ký Ức",
         original_title: "Severance",
+        type: "tv",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,
@@ -71,6 +79,7 @@ export const MovieService = {
       },
       {
         id: 5,
+        tmdb_id: 259188,
         slug: "drifting-away",
         src: "https://image.tmdb.org/t/p/original/z1buWt3MeqamyzVbKggLtlG1rZV.jpg",
         poster:
@@ -78,6 +87,7 @@ export const MovieService = {
         alt: "Slide 5",
         title: "Tẩy Trắng",
         original_title: "Drifting Away",
+        type: "movie",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,
@@ -88,6 +98,7 @@ export const MovieService = {
       },
       {
         id: 6,
+        tmdb_id: 539972,
         slug: "kraven-the-hunter",
         src: "https://image.tmdb.org/t/p/original/rDa3SfEijeRNCWtHQZCwfbGxYvR.jpg",
         poster:
@@ -95,6 +106,7 @@ export const MovieService = {
         alt: "Slide 6",
         title: "Kraven: Thợ Săn Thủ Lĩnh",
         original_title: "Kraven the Hunter",
+        type: "movie",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,
@@ -105,6 +117,7 @@ export const MovieService = {
       },
       {
         id: 7,
+        tmdb_id: 125988,
         slug: "silo",
         src: "https://image.tmdb.org/t/p/original/n5FPNMJ0eRoiQrKGfUQQRAZeaxg.jpg",
         poster:
@@ -112,6 +125,7 @@ export const MovieService = {
         alt: "Slide 7",
         title: "Silo",
         original_title: "Silo",
+        type: "tv",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,
@@ -122,6 +136,7 @@ export const MovieService = {
       },
       {
         id: 8,
+        tmdb_id: 93405,
         slug: "squid-game",
         src: "https://image.tmdb.org/t/p/original/87mebbBtoWzHV0kILgV6M7yIfun.jpg",
         poster:
@@ -129,6 +144,7 @@ export const MovieService = {
         alt: "Slide 8",
         title: "Trò chơi con mực",
         original_title: "Squid Game",
+        type: "tv",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,
@@ -139,6 +155,7 @@ export const MovieService = {
       },
       {
         id: 9,
+        tmdb_id: 402431,
         slug: "wicked",
         src: "https://image.tmdb.org/t/p/original/uKb22E0nlzr914bA9KyA5CVCOlV.jpg",
         poster:
@@ -146,6 +163,7 @@ export const MovieService = {
         alt: "Slide 9",
         title: "Wicked",
         original_title: "Wicked",
+        type: "movie",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,
@@ -156,6 +174,7 @@ export const MovieService = {
       },
       {
         id: 10,
+        tmdb_id: 1249289,
         slug: "alarum",
         src: "https://image.tmdb.org/t/p/original/qSOMdbZ6AOdHR999HWwVAh6ALFI.jpg",
         poster:
@@ -163,6 +182,7 @@ export const MovieService = {
         alt: "Slide 10",
         title: "Mạng Lưới Alarum",
         original_title: "Alarum",
+        type: "movie",
         imdb: 8.0,
         model: "T16",
         releaseYear: 2020,

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import Box from '~/components/atoms/Box.vue';
-import CastCircleItem from '@/components/atoms/CastCircleItem.vue';
+import CastCircleItem from '~/components/atoms/CastCircleItem.vue';
 import CommentBox from '~/components/atoms/CommentBox.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
 import EpisodeList from '~/components/molecules/EpisodeList.vue';
-import { useGetListCredit } from '@/composables/api/movies/use-get-list-credit';
+import { useComment } from '~/composables/api/movies/use-create-comment';
+import { useGetComment } from '~/composables/api/movies/use-get-comment';
+import { useGetListCredit } from '~/composables/api/movies/use-get-list-credit';
 import { MovieService } from '~/services/DummnyDataMovie';
 
 const tagItems = [
@@ -33,8 +35,45 @@ const setActive = (index: number) => {
   activeItem.value = index;
 };
 
-const comment = ref('');
+const comment = ref("");
+const movieId = ref("1")
+const { data: commentList, refetch: refetchComment } = useGetComment(movieId);
+const commentsList = computed(() => {
+  return commentList.value?.data;
+})
+const countComments = (comments: any[]): number => 
+  comments.reduce((total, comment) => total + 1 + countComments(comment.replies || []), 0);
+  
+const totalComments = ref(0);
+const updateTotalComments = () => {
+  totalComments.value = countComments(commentList.value?.data || []);
+};
 
+watch(() => commentList.value?.data, updateTotalComments, { deep: true, immediate: true })
+const { mutate } = useComment();
+const submitComment = () => {
+  if (!comment.value.trim()) return;
+
+  mutate(
+    {
+      userId: 1,
+      movieId: 1,
+      parentId: 31,
+      isApproved: 1,
+      content: comment.value.trim(),
+    },
+    {
+      onSuccess: async () => {
+        comment.value = "";
+        await refetchComment();
+        updateTotalComments();
+      },
+      onError: (error: any) => {
+        console.error("Lỗi gửi bình luận:", error);
+      },
+    }
+  );
+};
 const comments = [
   {
     avatar: 'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png',
@@ -116,7 +155,7 @@ const suggestMovie = MovieService.getMovieData();
 
 const type = ref("movie");
 const tmdb = ref("tt28607951");
-const { data: credits, refetch } = useGetListCredit(type, tmdb);
+const { data: credits } = useGetListCredit(type, tmdb);
 const castList = ref<CastTmdb[]>([]);
 watchEffect(() => {
   if (credits.value?.cast) {
@@ -279,23 +318,22 @@ watchEffect(() => {
         <Flex direction="column" :style="{ marginBottom: '1.5rem!important' }" gap="24px">
           <Flex align="center" gap="8px">
             <i class="pi pi-comments" />
-            <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold' }">Bình luận (12)</h2>
+            <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold' }">Bình luận ({{ totalComments }})</h2>
           </Flex>
           <IftaLabel style="padding: 12px; background-color: #272932; border-radius: 8px">
             <Textarea id="description" v-model="comment" rows="5" cols="148" style="resize: none; background-color: #191b24;border: none; color: #ffffff; overflow:hidden" />
             <label style="padding: 12px; font-weight: bold;" for="description">Viết bình luận</label>
             <Flex align="center" justify="flex-end">
-              <Button type="submit" icon="pi pi-send" label="Gửi" variant="text"/>
+              <Button type="submit" icon="pi pi-send" label="Gửi" variant="text" :disabled="!comment.trim()"
+              @click="submitComment"/>
             </Flex>
           </IftaLabel>
           <Flex direction="column" gap="24px">
             <CommentBox 
-              v-for="comment in comments" 
-              :key="comment.time" 
-              :avatar="comment.avatar" 
-              :name="comment.name" 
-              :time="comment.time" 
-              :comment="comment.comment" 
+              v-for="comment in commentsList" 
+              :key="comment.id"
+              :time="comment.created_at" 
+              :comment="comment.content" 
               :replies="comment.replies" 
             />
           </Flex>

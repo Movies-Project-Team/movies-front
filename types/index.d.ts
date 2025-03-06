@@ -10,24 +10,26 @@ type Routes = {
 
 type Movie = {
   id: number;
-  title: string;
-  original_title: string;
-  src: string;
-  poster: string;
-  thumbnail: string;
-  produce_by: string,
-  season: number,
-  vote_average: number,
-  year: number,
-  esp_total: number,
-  slug: string;
-  alt: string;
-  imdb: number;
-  model: string;
-  releaseYear: number;
-  totalEpisodes: number;
-  genres: string[];
-  description: string;
+  title?: string;
+  original_title?: string;
+  src?: string;
+  poster?: string;
+  thumbnail?: string;
+  produce_by?: string,
+  tmdb_id?: number,
+  type?: string,
+  season?: number,
+  vote_average?: number,
+  year?: number,
+  esp_total?: number,
+  slug?: string;
+  alt?: string;
+  imdb?: number;
+  model?: string;
+  releaseYear?: number;
+  totalEpisodes?: number;
+  genres?: string[];
+  description?: string;
 };
 
 type MovieTmdb = {
@@ -116,4 +118,35 @@ type CastTmdb = {
 type CreditsTmdbResponse = {
   id: number;
   cast: CastTmdb[]
+}
+
+type ImageTmdb = {
+  aspect_ratio: float,
+  height: number,
+  iso_639_1: string,
+  file_path: string,
+  vote_average: number,
+  vote_count: number,
+  width: number
+}
+
+type ImageTmdbResponse = {
+  id: number,
+  backdrops: ImageTmdb[],
+  logos: ImageTmdb[],
+  posters: ImageTmdb[],
+}
+
+type CommentResponse = {
+  id: number,
+  content: string,
+  status: number,
+  created_at: string,
+  replies: CommentResponse[],
+}
+
+type CommentListResponse = {
+  code: number,
+  message: string,
+  data: CommentResponse[],
 }

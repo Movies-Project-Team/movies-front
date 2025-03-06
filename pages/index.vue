@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { useSwiper } from '#imports'
-import { Button } from 'primevue';
 import { ref } from 'vue'
 import { EffectFade } from 'swiper/modules';
 import Box from '~/components/atoms/Box.vue';
-import Flex from '~/components/atoms/Flex.vue';
-import Tag from '~/components/atoms/Tag.vue';
 import SectionContainer from '~/components/atoms/SectionContainer.vue';
 import MovieList from '~/components/molecules/MovieList.vue';
 import RankingContainer from '~/components/molecules/RankingContainer.vue';
 import { useWindowWidth } from '@/composables/resize/windowWidth';
 import WatchContinuteList from '~/components/molecules/WatchContinuteList.vue';
 import { MovieService } from '~/services/DummnyDataMovie';
+import SlideItem from '~/components/atoms/SlideItem.vue';
 
 const slides = ref(MovieService.getMovieData());
 
@@ -58,46 +56,7 @@ useSwiper(swiperCreativeRef, {
                 style="width: 100%; height: calc(100vh - 40px); object-fit: cover;" 
                 loading="lazy"
               />
-              <Flex direction="column" justify="center" class="slide-content">
-                <h2 
-                  :style="{
-                    fontSize: '52px'
-                  }"
-                >
-                  {{ slide.title }}
-                </h2>
-                <Flex gap="10px" direction="column"> 
-                  <Flex gap="8px">
-                    <Tag :content="slide.imdb" :sub-content="'IMBd'" :type="'imdb'"/>
-                    <Tag :content="slide.model" :type="'background'"/>
-                    <Tag :content="slide.releaseYear" :type="'classic'"/>
-                    <Tag :content="slide.totalEpisodes" :sub-content="'Tập'" :type="'classic'"/>
-                  </Flex>
-                  <Flex gap="8px">
-                    <Tag v-for="(genre, index) in slide.genres" :key="index" :content="genre" :type="'topic'"/>
-                  </Flex>
-                  <Box 
-                    :style="{
-                      fontSize: '1rem',
-                      lineHeight: 1.6,
-                      color: '#fff',
-                      textShadow: '0 1px 1px rgba(0, 0, 0, .2)',
-                      fontWeight: 400,
-                      marginBottom: '2rem',
-                    }"
-                  >
-                    {{ slide.description }}
-                  </Box>
-                </Flex>
-                <Button 
-                  label="Xem ngay"
-                  icon="pi pi-play-circle"
-                  aria-label="Filter" 
-                  :style="{
-                    width: '170px',
-                    padding: '15px 31px',
-                  }"/>
-              </Flex>
+              <SlideItem :data="slide" />
             </swiper-slide>
           </swiper-container>
         </ClientOnly>

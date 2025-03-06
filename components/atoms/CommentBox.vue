@@ -3,21 +3,20 @@ import { ref, computed } from 'vue';
 import Box from './Box.vue';
 import Flex from './Flex.vue';
 
-const props = defineProps({
-  avatar: String,
-  name: String,
-  time: String,
-  comment: String,
-  repliedTo: String,
-  replies: Array as () => { 
-    avatar: string, 
-    name: string, 
-    time: string, 
-    comment: string, 
-    replies?: any[] 
-  }[],
-  level: { type: Number, default: 1 },
-});
+const props = withDefaults(
+  defineProps<{
+    avatar?: string;
+    name?: string;
+    time?: string;
+    comment?: string;
+    repliedTo?: string;
+    replies?: CommentResponse[];
+    level?: number;
+  }>(),
+  {
+    level: 1,
+  }
+);
 
 const isReply = computed(() => !!props.repliedTo);
 const showReplies = ref(false);
@@ -34,11 +33,11 @@ const totalReplies = computed(() => {
   <Flex gap="20px" direction="column">
     <Flex gap="12px" justify="flex-start">
       <Box>
-        <Avatar :image="avatar" class="mr-2" size="large" shape="circle" />
+        <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="mr-2" size="large" shape="circle" />
       </Box>
       <Flex direction="column" gap="10px" :style="{ fontSize: '14px' }">
         <Flex align="center" gap="12px">
-          <Box :style="{ fontWeight: 'bold' }">{{ name }}</Box>
+          <Box :style="{ fontWeight: 'bold' }">Nguyễn Văn A</Box>
           <span :style="{ color: '#aaa', opacity: '.5', fontSize: '12px' }">{{ time }}</span>
         </Flex>
         <Flex gap="6px" align="center">
@@ -78,12 +77,10 @@ const totalReplies = computed(() => {
     >
       <CommentBox 
         v-for="reply in replies" 
-        :key="reply.time" 
-        :avatar="reply.avatar" 
-        :name="reply.name" 
-        :time="reply.time" 
+        :key="reply.id"
+        :time="reply.created_at" 
         :repliedTo="name"
-        :comment="reply.comment"
+        :comment="reply.content"
         :replies="reply.replies"
         :level="level + 1"
       />
