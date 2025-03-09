@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import Box from './Box.vue';
 import Flex from './Flex.vue';
+import { useComment } from '~/composables/api/movies/use-create-comment';
+import CommentInput from "~/components/atoms/CommentInput.vue";
 
 const props = withDefaults(
   defineProps<{
+    id: number;
     avatar?: string;
     name?: string;
     time?: string;
@@ -18,15 +21,55 @@ const props = withDefaults(
   }
 );
 
+// Lưu trạng thái isReplying theo id của comment
+const replyingState = reactive<{ [key: number]: boolean }>({});
+
 const isReply = computed(() => !!props.repliedTo);
 const showReplies = ref(false);
+const selectedCommentId = ref<number | null>(null);
 
+// Tính tổng số replies
 const totalReplies = computed(() => {
   const countReplies = (replies: any[]) => {
     return replies.reduce((total, reply) => total + 1 + (reply.replies ? countReplies(reply.replies) : 0), 0);
   };
   return props.replies ? countReplies(props.replies) : 0;
 });
+
+// Xử lý khi nhấn "Trả lời"
+const handleReplyClick = (commentId: number) => {
+  replyingState[commentId] = !replyingState[commentId];
+
+  if (!replyingState[commentId]) {
+    selectedCommentId.value = null;
+  } else {
+    selectedCommentId.value = commentId;
+  }
+};
+const emit = defineEmits(['update:isRefetch']);
+const { mutate } = useComment();
+const submitComment = (comment: string) => {
+  mutate(
+    {
+      userId: 1,
+      movieId: 1,
+      parentId: selectedCommentId.value || null,
+      isApproved: 1,
+      content: comment,
+    },
+    {
+      onSuccess: async () => {
+        if (selectedCommentId.value !== null) {
+          replyingState[selectedCommentId.value] = false;
+        }
+        emit('update:isRefetch', true);
+      },
+      onError: (error: any) => {
+        console.error("Lỗi gửi bình luận:", error);
+      },
+    }
+  );
+};
 </script>
 
 <template>
@@ -47,7 +90,7 @@ const totalReplies = computed(() => {
         <Flex gap="16px" :style="{ fontSize: '12px' }">
           <i class="pi pi-arrow-circle-up" style="color: #ddd; cursor: pointer"></i>
           <i class="pi pi-arrow-circle-down" style="color: #ddd; cursor: pointer"></i>
-          <Flex gap="6px" align="center" :style="{ cursor: 'pointer', color: '#aaa' }">
+          <Flex gap="6px" align="center" @click="handleReplyClick(id)" :style="{ cursor: 'pointer', color: '#aaa' }">
             <i class="pi pi-reply" style="color: #aaa; cursor: pointer; font-size: 12px"></i>
             <span>Trả lời</span>
           </Flex>
@@ -68,6 +111,9 @@ const totalReplies = computed(() => {
       </Flex>
     </Flex>
 
+    <!-- Hiển thị CommentInput khi nhấn vào nút "Trả lời" -->
+    <CommentInput v-if="replyingState[id]" @close="replyingState[id] = false" @submitComment="submitComment"/>
+
     <!-- Hiển thị danh sách replies khi showReplies = true -->
     <Flex 
       v-if="(level > 1) || showReplies" 
@@ -78,12 +124,15 @@ const totalReplies = computed(() => {
       <CommentBox 
         v-for="reply in replies" 
         :key="reply.id"
+        :id="reply.id"
         :time="reply.created_at" 
-        :repliedTo="name"
+        :repliedTo="'Nguyễn Văn A'"
         :comment="reply.content"
         :replies="reply.replies"
         :level="level + 1"
+        @update:isRefetch="emit('update:isRefetch')"
       />
     </Flex>
   </Flex>
 </template>
+

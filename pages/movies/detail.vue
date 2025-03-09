@@ -175,7 +175,7 @@ const genreItems = [
             width: '100%',
           }"
         >
-          <NuxtImg fit="cover" :src="posterSrc" alt="" :style="{ width: '100%', height: '90%', maxHeight: '480px' }"/>
+          <NuxtImg fit="cover" :src="posterSrc" alt="" :style="{ width: '100%', height: '90%', maxHeight: '480px', objectFit: 'cover' }" />
         </Box>
       </Flex>
     </Flex>

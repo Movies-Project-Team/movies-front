@@ -2,6 +2,7 @@
 import Box from '~/components/atoms/Box.vue';
 import CastCircleItem from '~/components/atoms/CastCircleItem.vue';
 import CommentBox from '~/components/atoms/CommentBox.vue';
+import CommentInput from '@/components/atoms/CommentInput.vue';
 import Flex from '~/components/atoms/Flex.vue';
 import Tag from '~/components/atoms/Tag.vue';
 import EpisodeList from '~/components/molecules/EpisodeList.vue';
@@ -35,9 +36,8 @@ const setActive = (index: number) => {
   activeItem.value = index;
 };
 
-const comment = ref("");
 const movieId = ref("1")
-const { data: commentList, refetch: refetchComment } = useGetComment(movieId);
+const { data: commentList, refetch: refetchComment, isLoading: isLoadingComment } = useGetComment(movieId);
 const commentsList = computed(() => {
   return commentList.value?.data;
 })
@@ -50,21 +50,21 @@ const updateTotalComments = () => {
 };
 
 watch(() => commentList.value?.data, updateTotalComments, { deep: true, immediate: true })
+const isRefetchComments = async () => {
+  await refetchComment();
+  updateTotalComments();
+};
 const { mutate } = useComment();
-const submitComment = () => {
-  if (!comment.value.trim()) return;
-
+const submitComment = (comment: string) => {
   mutate(
     {
-      userId: 1,
       movieId: 1,
-      parentId: 31,
+      userId: 1,
       isApproved: 1,
-      content: comment.value.trim(),
+      content: comment,
     },
     {
       onSuccess: async () => {
-        comment.value = "";
         await refetchComment();
         updateTotalComments();
       },
@@ -74,83 +74,6 @@ const submitComment = () => {
     }
   );
 };
-const comments = [
-  {
-    avatar: 'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png',
-    name: 'Onyama Limba',
-    time: '11 ngày trước',
-    comment: 'Làm sao để xem phim vậy mọi người? Bấm vào tập nó hiện mỗi cái poster phim xong chả có nút nủng gì ):',
-    replies: [
-      {
-        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png',
-        name: 'Xuxu',
-        time: '10 ngày trước',
-        comment: 'Bấm vào góc phải có nút play đó bạn.',
-        replies: [
-          {
-            avatar: 'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png',
-            name: 'John',
-            time: '9 ngày trước',
-            comment: 'Chắc lỗi trình duyệt rồi.',
-            replies: []
-          }
-        ]
-      },
-      {
-        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png',
-        name: 'Jane',
-        time: '10 ngày trước',
-        comment: 'Bạn thử F5 lại xem sao?',
-        replies: []
-      }
-    ]
-  },
-  {
-    avatar: 'https://primefaces.org/cdn/primevue/images/avatar/xuxuefeng.png',
-    name: 'Michael',
-    time: '7 ngày trước',
-    comment: 'Phim này có vietsub không mọi người?',
-    replies: [
-      {
-        avatar: 'https://primefaces.org/cdn/primevue/images/organization/walter.jpg',
-        name: 'Sarah',
-        time: '6 ngày trước',
-        comment: 'Có sub tiếng Anh thôi nha bạn.',
-        replies: []
-      },
-      {
-        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png',
-        name: 'Tom',
-        time: '5 ngày trước',
-        comment: 'Mình đang tìm vietsub, ai có link share với!',
-        replies: [
-          {
-            avatar: 'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png',
-            name: 'Alice',
-            time: '4 ngày trước',
-            comment: 'Bạn thử lên subscene xem.',
-            replies: []
-          }
-        ]
-      }
-    ]
-  },
-  {
-    avatar: 'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png',
-    name: 'Emily',
-    time: '3 ngày trước',
-    comment: 'Ai biết phim này có bao nhiêu tập không?',
-    replies: [
-      {
-        avatar: 'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png',
-        name: 'David',
-        time: '2 ngày trước',
-        comment: 'Hình như có 16 tập bạn ơi!',
-        replies: []
-      }
-    ]
-  }
-];
 const suggestMovie = MovieService.getMovieData();
 
 const type = ref("movie");
@@ -320,22 +243,20 @@ watchEffect(() => {
             <i class="pi pi-comments" />
             <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold' }">Bình luận ({{ totalComments }})</h2>
           </Flex>
-          <IftaLabel style="padding: 12px; background-color: #272932; border-radius: 8px">
-            <Textarea id="description" v-model="comment" rows="5" cols="148" style="resize: none; background-color: #191b24;border: none; color: #ffffff; overflow:hidden" />
-            <label style="padding: 12px; font-weight: bold;" for="description">Viết bình luận</label>
-            <Flex align="center" justify="flex-end">
-              <Button type="submit" icon="pi pi-send" label="Gửi" variant="text" :disabled="!comment.trim()"
-              @click="submitComment"/>
-            </Flex>
-          </IftaLabel>
-          <Flex direction="column" gap="24px">
+          <CommentInput @submitComment="submitComment"/>
+          <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="transparent"
+            v-if="isLoadingComment" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+          <Flex v-else direction="column" gap="24px">
             <CommentBox 
               v-for="comment in commentsList" 
               :key="comment.id"
+              :id="comment.id"
               :time="comment.created_at" 
               :comment="comment.content" 
-              :replies="comment.replies" 
+              :replies="comment.replies"
+              @update:isRefetch="isRefetchComments()"
             />
+            <h3 v-if="totalComments == 0">Chưa có bình luận, hãy bình luận nào!!!</h3>
           </Flex>
         </Flex>
       </Box>
