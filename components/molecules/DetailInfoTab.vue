@@ -3,6 +3,7 @@ import Box from '../atoms/Box.vue';
 import CastList from './CastList.vue';
 import EpisodeList from './EpisodeList.vue';
 
+const props = defineProps<{ espCurrent?: string }>();
 </script>
 
 <template>
@@ -15,7 +16,7 @@ import EpisodeList from './EpisodeList.vue';
       </TabList>
       <TabPanels>
         <TabPanel value="0">
-          <EpisodeList />
+          <EpisodeList :esp-current="espCurrent"/>
         </TabPanel>
         <TabPanel value="1">
           <CastList />

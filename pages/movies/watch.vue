@@ -10,14 +10,25 @@ import { useComment } from '~/composables/api/movies/use-create-comment';
 import { useGetComment } from '~/composables/api/movies/use-get-comment';
 import { useGetListCredit } from '~/composables/api/movies/use-get-list-credit';
 import { MovieService } from '~/services/DummnyDataMovie';
+import { useGetMovie } from '~/composables/api/movies/use-get-movie';
 
-const tagItems = [
-  { content: 7.1, subContent: "IMBd", type: "imdb" },
+const tagItems = computed(() => [
+  { content: movie.value.vote_average ?? "N/A", subContent: "IMBd", type: "imdb" },
   { content: "T12", type: "background" },
-  { content: 2024 },
-  { content: "Phần 1" },
-  { content: "Tập 12" }
-];
+  { content: movie.value.year ?? "N/A" },
+  { 
+    content: movie.value.season 
+      ? `Phần ${movie.value.season}` 
+      : "Chưa cập nhật" 
+  },
+  { 
+    content: movie.value.esp_total 
+      ? movie.value.esp_total.toString().includes("Tập") 
+        ? movie.value.esp_total 
+        : `${movie.value.esp_total} Tập ` 
+      : "Chưa cập nhật" 
+  }
+]);
 
 const genreItems = [
   { content: "Hành Động", type: "topic" },
@@ -31,12 +42,40 @@ const serverItems = [
   { content: "Thuyết minh" },
 ];
 
+const loading = useLoadingStore();
+
+// fetch detail movie
+const route = useRoute();
+const slug = computed(() => 
+  Array.isArray(route.params.title) ? route.params.title[0] : route.params.title
+);
+
+const { data, isLoading: isLoadingDetailMovie } = useGetMovie(slug);
+const movie = computed<Movie>(() => data.value?.data ?? ({} as Movie));
+const movieId = computed(() => {
+  return movie.value?.id?.toString() || "";
+});
+const plainDescription = computed(() => {
+  return (movie.value.description || '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .trim();
+});
+
+watchEffect(() => {
+  if (isLoadingDetailMovie.value) {
+    loading.show();
+  } else {
+    loading.hide();
+  }
+});
+
 const activeItem = ref<number | null>(0);
 const setActive = (index: number) => {
   activeItem.value = index;
 };
 
-const movieId = ref("1")
+// fetch comment
 const { data: commentList, refetch: refetchComment, isLoading: isLoadingComment } = useGetComment(movieId);
 const commentsList = computed(() => {
   return commentList.value?.data;
@@ -58,7 +97,7 @@ const { mutate } = useComment();
 const submitComment = (comment: string) => {
   mutate(
     {
-      movieId: 1,
+      movieId: movieId.value,
       userId: 1,
       isApproved: 1,
       content: comment,
@@ -76,6 +115,7 @@ const submitComment = (comment: string) => {
 };
 const suggestMovie = MovieService.getMovieData();
 
+// fetch redits
 const type = ref("movie");
 const tmdb = ref("tt28607951");
 const { data: credits } = useGetListCredit(type, tmdb);
@@ -94,7 +134,7 @@ watchEffect(() => {
     }"
   >
   <h2 :style="{ fontSize: '1.25rem', fontWeight: '500' }">
-    Bạn đang xem phim: Avengers: Endgame
+    Bạn đang xem phim: Avengers: {{ movie.title }}
   </h2>
   <Box :style="{ width: '100%', height: '900px', position: 'relative', margin: '1rem 0' }">
     <vue-plyr :style="{ width: '100%', height: '100%', position: 'absolute' }">
@@ -128,7 +168,7 @@ watchEffect(() => {
             overflow: 'hidden' 
           }">
           <NuxtImg
-            src="https://image.tmdb.org/t/p/original/bEcFBnDwUXXDizdaR5EiC0qRhS3.jpg" 
+            :src="movie.thumbnail" 
             preload 
             format="webp"
             :width="360"
@@ -150,10 +190,10 @@ watchEffect(() => {
             overflow: 'hidden'
           }">
             <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold' }">
-              Avengers: Endgame
+              {{ movie.title }}
             </h2>
             <p :style="{ color: '#6b7280', fontSize: '0.875rem' }">
-              Marvel Studios
+              {{ movie.name || "Chưa cập nhật" }}
             </p>
             <Flex direction="column" gap="0.5rem" :style="{ fontWeight: 'bold', fontSize: '12px' }">
               <Flex
@@ -194,8 +234,8 @@ watchEffect(() => {
             maxWidth: '532px'
           }"
         >
-          <p :style="{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '4', overflow: 'hidden', fontWeight: 'normal' }">
-            Các siêu anh hùng còn lại phải tập hợp lại một lần nữa để hoàn thành nhiệm vụ cuối cùng - đưa những người đã mất trở lại.
+          <p :style="{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '3', overflow: 'hidden', fontWeight: 'normal' }">
+            {{ plainDescription }}
           </p>
           <Flex gap="12px">
             <Button label="Xem cùng nhau" icon="pi pi-users" />
@@ -234,7 +274,7 @@ watchEffect(() => {
           </Flex>
         </Flex>
         <ScrollPanel :style="{ width: '100%', overflow: 'auto', minHeight: '65px', maxHeight: '235px' }">
-          <EpisodeList />
+          <EpisodeList :esp-current="movie?.esp_current"/>
         </ScrollPanel>
       </Box>
       <Box>

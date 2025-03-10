@@ -2,6 +2,23 @@
 import Box from '../atoms/Box.vue';
 import Flex from '../atoms/Flex.vue';
 
+const props = defineProps<{ espCurrent?: string }>();
+const episodeList = computed(() => {
+  const espCurrent = props.espCurrent ?? "";
+  if (!espCurrent) {
+    return []; 
+  }
+  if (espCurrent.toLowerCase().includes('full') || espCurrent === "Tập 0") {
+    return ['Full'];
+  }
+
+  const match = espCurrent.match(/\d+/);
+  const totalEpisodes = match ? parseInt(match[0], 10) : 1;
+  
+  return Array.from({ length: totalEpisodes }, (_, i) => `${i + 1}`);
+});
+
+
 const activeItem = ref<number | null>(0);
 const setActive = (index: number) => {
   activeItem.value = index;
@@ -14,8 +31,9 @@ const setActive = (index: number) => {
       gap="10px"
       wrap="wrap"
     >
+      <p style="color: white; font-size: 1rem;" v-if="episodeList.length === 0">Đang cập nhật</p>
       <Flex
-        v-for="(episode, index) in 70"
+        v-for="(episode, index) in episodeList"
         justify="center"
         align="center"
         @click="setActive(index)"
@@ -30,6 +48,7 @@ const setActive = (index: number) => {
         }"
         @mouseover="(e) => e.currentTarget.style.opacity = '0.7'"
         @mouseleave="(e) => e.currentTarget.style.opacity = '1'"
+        v-else
       > 
         <Flex 
           align="center"

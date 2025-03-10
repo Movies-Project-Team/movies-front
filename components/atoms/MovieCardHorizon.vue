@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Box from './Box.vue';
 import Flex from './Flex.vue';
 
 const props = defineProps<{
@@ -13,8 +12,8 @@ const props = defineProps<{
     :direction="'column'"
   >
     <NuxtImg 
-      :src="data.src" 
-      :alt="data.src" 
+      :src="data.poster" 
+      :alt="data.poster" 
       :style="{
         width: '290px',
         height: '170px',

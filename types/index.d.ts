@@ -12,6 +12,7 @@ type Movie = {
   id: number;
   title?: string;
   original_title?: string;
+  name?: string;
   src?: string;
   poster?: string;
   thumbnail?: string;
@@ -22,6 +23,7 @@ type Movie = {
   vote_average?: number,
   year?: number,
   esp_total?: number,
+  esp_current?: string,
   slug?: string;
   alt?: string;
   imdb?: number;

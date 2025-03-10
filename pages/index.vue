@@ -10,9 +10,14 @@ import { useWindowWidth } from '@/composables/resize/windowWidth';
 import WatchContinuteList from '~/components/molecules/WatchContinuteList.vue';
 import { MovieService } from '~/services/DummnyDataMovie';
 import SlideItem from '~/components/atoms/SlideItem.vue';
+import { useGetListMovie } from '~/composables/api/movies/use-get-list-movie';
 
 const slides = ref(MovieService.getMovieData());
-
+const params = ref({
+  "item": 10,
+  "keyword": '',
+});
+const { data, refetch } = useGetListMovie(params);
 const screenWidth = useWindowWidth();
 
 const swiperCreativeRef = ref(null)
@@ -64,13 +69,13 @@ useSwiper(swiperCreativeRef, {
     </div>
     <Box :style="{ padding: '0px 50px', marginBottom: '60px' }">
       <SectionContainer :title="'Xem tiếp'">
-        <WatchContinuteList :data="slides"/>
+        <WatchContinuteList :data="data?.data ?? []"/>
       </SectionContainer>
       <SectionContainer :title="'Bảng xếp hạng'" :style="{display: screenWidth <= 900 ? 'none' : 'flex'}">
-        <RankingContainer :data="slides"/>
+        <RankingContainer :data="data?.data ?? []"/>
       </SectionContainer>
       <SectionContainer :title="'Phim mới'">
-        <MovieList :data="slides"/>
+        <MovieList :data="data?.data ?? []"/>
       </SectionContainer>
     </Box>
   </main>

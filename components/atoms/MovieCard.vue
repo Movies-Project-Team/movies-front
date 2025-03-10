@@ -27,7 +27,7 @@ const defaultPoster = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/film
 
 const imageSrc = computed(() => {
   if (isMovie(props.data)) {
-    return props.data.poster || defaultPoster;
+    return props.data.thumbnail || defaultPoster;
   }
   return props.data.poster_path ? `${config.public.imageTmdbDomain}/${props.data.poster_path}` : defaultPoster;
 });
