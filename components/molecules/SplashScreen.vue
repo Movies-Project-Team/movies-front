@@ -1,26 +1,52 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import Flex from "../atoms/Flex.vue";
+import Box from "../atoms/Box.vue";
 
 const showSplash = ref(false);
+const progress = ref(0);
+const interval = ref();
+const startProgress = () => {
+    interval.value = setInterval(() => {
+      let newValue = progress.value + Math.floor(Math.random() * 10) + 10;
+      if (newValue >= 100) {
+          newValue = 100;
+          clearInterval(interval.value);
+          localStorage.setItem("hasVisited", "true");
+          setTimeout(() => {
+            showSplash.value = false;
+          }, 500);
+      }
+      progress.value = newValue;
+    }, 700);
+};
+const endProgress = () => {
+    clearInterval(interval.value);
+    interval.value = null;
+};
 
 onMounted(() => {
   const hasVisited = localStorage.getItem("hasVisited");
 
   if (!hasVisited) {
+    startProgress();
     showSplash.value = true;
-    setTimeout(() => {
-      showSplash.value = false;
-      localStorage.setItem("hasVisited", "true");
-    }, 3000);
   }
+});
+
+onBeforeUnmount(() => {
+  endProgress();
 });
 </script>
 
 <template>
-  <div v-if="showSplash" class="splash-screen">
+  <Flex direction="column" gap="8px" v-if="showSplash" class="splash-screen">
     <img src="https://streamvid.jwsuperthemes.com/wp-content/uploads/2023/02/logo.svg" alt="Movie Logo" />
-    <h1>Chào mừng bạn đến Phim Súc Vật</h1>
-  </div>
+    <h1>Chào mừng tới wesbite xem phim của chúng tôi</h1>
+    <Box class="progress-container">
+      <ProgressBar class="progress-bar" :style="{ width: '440px' }" :value="progress" ></ProgressBar>
+    </Box>
+  </Flex>
 </template>
 
 <style scoped>

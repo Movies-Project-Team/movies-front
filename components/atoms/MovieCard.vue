@@ -47,8 +47,7 @@ const formattedReleaseDate = computed(() => {
     @click="goToDetail"
     :direction="isVer2 ? 'row' : 'column'" 
     :justify="isVer2 ? 'flex-start' : 'center'" 
-    :style="{ cursor: 'pointer' }"
-    
+    :style="{ cursor: 'pointer', maxWidth: '221px', }"
   >
     <Box
       :style="{
@@ -70,7 +69,7 @@ const formattedReleaseDate = computed(() => {
         :style="{ 
           width: isVer2 ? '25px' : '221px',
           borderRadius: isVer2 ? '0px' : '8px',
-          minHeight: isVer2 ? '0px' : '330px'
+          minHeight: isVer2 ? '0px' : '330px',
         }"
         :placeholder="[50, 25, 75, 5]"
         @mouseover="(e: any) => e.currentTarget.style.opacity = '0.7'"
@@ -93,7 +92,7 @@ const formattedReleaseDate = computed(() => {
         <h1 
           :style="{
             textAlign: 'center',
-            fontSize: '10px'
+            fontSize: '10px',
           }"
         >P.Đề</h1>
       </Box>
@@ -101,7 +100,11 @@ const formattedReleaseDate = computed(() => {
     <h4 
       :style="{ 
         fontSize: isVer2 ? '12px' : '14px',
-        margin: '0px'
+        margin: '0px',
+        display: '-webkit-box', 
+        WebkitBoxOrient: 'vertical', 
+        WebkitLineClamp: '1', 
+        overflow: 'hidden'
       }"
     >
       {{ data.title }}

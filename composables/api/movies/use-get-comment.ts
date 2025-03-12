@@ -18,6 +18,7 @@ export const useGetComment = (
     queryKey: ['comment-list', movieId.value],
     queryFn: () => fetchData(movieId.value),
     placeholderData: keepPreviousData,
+    enabled: !!movieId.value,
   });
 
   return {

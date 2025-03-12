@@ -3,9 +3,9 @@ import { apiReClient } from "~/utils/apiReClient";
 
 const ENDPOINT = '/util/languages';
 
-const fetchData = async (): Promise<LanguageReponse> => {
+const fetchData = async (): Promise<LanguageListResponse> => {
   const api = apiReClient();
-  const response = await api<LanguageReponse>(`${ENDPOINT}`, {
+  const response = await api<LanguageListResponse>(`${ENDPOINT}`, {
     method: 'GET',
   });
   return response;

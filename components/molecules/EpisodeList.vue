@@ -2,7 +2,9 @@
 import Box from '../atoms/Box.vue';
 import Flex from '../atoms/Flex.vue';
 
-const props = defineProps<{ espCurrent?: string }>();
+const props = defineProps<{ espCurrent?: string; slug?: string; activeEpisode?: number | null }>();
+const router = useRouter();
+
 const episodeList = computed(() => {
   const espCurrent = props.espCurrent ?? "";
   if (!espCurrent) {
@@ -18,10 +20,13 @@ const episodeList = computed(() => {
   return Array.from({ length: totalEpisodes }, (_, i) => `${i + 1}`);
 });
 
-
-const activeItem = ref<number | null>(0);
-const setActive = (index: number) => {
-  activeItem.value = index;
+const activeEpisode = ref<number | null>(props.activeEpisode || 1);
+const handleEpisodeChange = (episode: number) => {
+  activeEpisode.value = episode;
+  router.push({
+    path: `/xem-phim/${props.slug}`,
+    query: { server: "vietsub", ep: episode },
+  });
 };
 </script>
 
@@ -36,11 +41,11 @@ const setActive = (index: number) => {
         v-for="(episode, index) in episodeList"
         justify="center"
         align="center"
-        @click="setActive(index)"
+        @click="handleEpisodeChange(Number(episode))"
         :key="index"
         :style="{
-          opacity: activeItem === index ? '1' : '.8',
-          backgroundColor: activeItem === index ? '#ffd875' : '#282b3a',
+          opacity: activeEpisode == Number(episode) ? '1' : '.8',
+          backgroundColor: activeEpisode == Number(episode) ? '#ffd875' : '#282b3a',
           width: '146px',
           height: '50px',
           borderRadius: '0.5rem',
@@ -56,14 +61,14 @@ const setActive = (index: number) => {
           :style="{
             fontSize: '0.875rem',
             gap: '0.5rem',
-            color: activeItem === index ? '#191b24' : '#fff',
+            color: activeEpisode == Number(episode) ? '#191b24' : '#fff',
           }"
         >
           <i 
             class="pi pi-sort-down-fill" 
             :style="{
               fontSize: '1.2rem',
-              color: activeItem === index ? '#191b24' : '#fff',
+              color: activeEpisode == Number(episode) ? '#191b24' : '#fff',
               transform: 'rotate(270deg)'
             }"/>
           Tập: {{ episode }}

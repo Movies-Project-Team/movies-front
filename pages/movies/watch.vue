@@ -43,18 +43,19 @@ const serverItems = [
 ];
 
 const loading = useLoadingStore();
-
-// fetch detail movie
 const route = useRoute();
 const slug = computed(() => 
   Array.isArray(route.params.title) ? route.params.title[0] : route.params.title
 );
 
+// fetch detail movie
 const { data, isLoading: isLoadingDetailMovie } = useGetMovie(slug);
 const movie = computed<Movie>(() => data.value?.data ?? ({} as Movie));
+
 const movieId = computed(() => {
-  return movie.value?.id?.toString() || "";
+  return movie?.value?.id?.toString() || "";
 });
+
 const plainDescription = computed(() => {
   return (movie.value.description || '')
     .replace(/<[^>]*>/g, '')
@@ -63,37 +64,36 @@ const plainDescription = computed(() => {
 });
 
 watchEffect(() => {
-  if (isLoadingDetailMovie.value) {
-    loading.show();
-  } else {
-    loading.hide();
-  }
+  isLoadingDetailMovie.value ? loading.show() : loading.hide();
 });
-
-const activeItem = ref<number | null>(0);
-const setActive = (index: number) => {
-  activeItem.value = index;
-};
 
 // fetch comment
 const { data: commentList, refetch: refetchComment, isLoading: isLoadingComment } = useGetComment(movieId);
-const commentsList = computed(() => {
-  return commentList.value?.data;
-})
+const commentsList = computed(() => commentList.value?.data ?? []);
+const totalComments = ref(0);
+
+watch(movieId, (newMovieId) => {
+  if (newMovieId) {
+    refetchComment();
+  }
+});
+
 const countComments = (comments: any[]): number => 
   comments.reduce((total, comment) => total + 1 + countComments(comment.replies || []), 0);
   
-const totalComments = ref(0);
 const updateTotalComments = () => {
   totalComments.value = countComments(commentList.value?.data || []);
 };
 
 watch(() => commentList.value?.data, updateTotalComments, { deep: true, immediate: true })
+
+// handle comment
+const { mutate } = useComment();
 const isRefetchComments = async () => {
   await refetchComment();
   updateTotalComments();
 };
-const { mutate } = useComment();
+
 const submitComment = (comment: string) => {
   mutate(
     {
@@ -113,17 +113,27 @@ const submitComment = (comment: string) => {
     }
   );
 };
+
 const suggestMovie = MovieService.getMovieData();
 
 // fetch redits
 const type = ref("movie");
 const tmdb = ref("tt28607951");
 const { data: credits } = useGetListCredit(type, tmdb);
-const castList = ref<CastTmdb[]>([]);
-watchEffect(() => {
-  if (credits.value?.cast) {
-    castList.value = credits.value.cast.slice(0, 5);
-  }
+const castList = computed(() => credits.value?.cast?.slice(0, 5) ?? []);
+
+// active item
+const activeItem = ref<number | null>(0);
+const setActive = (index: number) => {
+  activeItem.value = index;
+};
+
+// handle set index episode
+const activeEpisode = ref<number | null>(
+  route.query.ep ? Number(route.query.ep) : null
+);
+watch(() => route.query.ep, (newEp) => {
+  activeEpisode.value = newEp ? Number(newEp) : null;
 });
 </script>
 
@@ -274,7 +284,11 @@ watchEffect(() => {
           </Flex>
         </Flex>
         <ScrollPanel :style="{ width: '100%', overflow: 'auto', minHeight: '65px', maxHeight: '235px' }">
-          <EpisodeList :esp-current="movie?.esp_current"/>
+          <EpisodeList 
+            :esp-current="movie?.esp_current" 
+            :slug="movie?.slug" 
+            :activeEpisode="activeEpisode"
+          />
         </ScrollPanel>
       </Box>
       <Box>

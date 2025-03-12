@@ -61,7 +61,7 @@ const params = ref({
   "item": 10,
   "keyword": '',
 });
-const { data, refetch } = useGetListMovie(params);
+const { data, refetch } = useGetListMovie(params, true);
 
 const search = async (event: any) => {
   const query = event.query.toLowerCase().trim();
@@ -78,6 +78,8 @@ const search = async (event: any) => {
 
 const clearInput = () => {
   searchQuery.value = "";
+  params.value.keyword = "";
+  refetch();
 };
 </script>
 

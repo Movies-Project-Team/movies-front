@@ -7,11 +7,22 @@ import { useGetMovie } from '~/composables/api/movies/use-get-movie';
 
 const route = useRoute();
 const router = useRouter();
+const loading = useLoadingStore();
+
 const slug = computed(() => 
   Array.isArray(route.params.title) ? route.params.title[0] : route.params.title
 );
-const { data } = useGetMovie(slug);
+const { data, isLoading: isLoadingDetailMovie } = useGetMovie(slug);
 const movie = computed<Movie>(() => data.value?.data ?? ({} as Movie));
+
+watchEffect(() => {
+  if (isLoadingDetailMovie.value || !data.value) {
+    loading.show();
+  } else {
+    loading.hide();
+  }
+});
+
 const plainDescription = computed(() => {
   return (movie.value.description || '')
     .replace(/<[^>]*>/g, '')
@@ -181,7 +192,7 @@ const goToDetail = (slug: any) => {
         </Box>
       </Flex>
     </Flex>
-    <DetailInfoTab :esp-current="movie?.esp_current"/>
+    <DetailInfoTab :esp-current="movie?.esp_current" :slug="movie?.slug"/>
   </Box>
 </template>
 

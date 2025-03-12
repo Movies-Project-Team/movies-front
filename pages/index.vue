@@ -17,8 +17,16 @@ const params = ref({
   "item": 10,
   "keyword": '',
 });
-const { data, refetch } = useGetListMovie(params);
+const { data, isLoading: isLoadingMovie } = useGetListMovie(params);
 const screenWidth = useWindowWidth();
+const loading = useLoadingStore();
+watchEffect(() => {
+  if (isLoadingMovie.value || !data.value) {
+    loading.show();
+  } else {
+    loading.hide();
+  }
+});
 
 const swiperCreativeRef = ref(null)
 useSwiper(swiperCreativeRef, {
@@ -42,6 +50,8 @@ useSwiper(swiperCreativeRef, {
     },
   },
 })
+
+provide('movies', data?.value?.data);
 </script>
 
 <template>

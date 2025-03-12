@@ -23,6 +23,7 @@ useSwiper(swiperCreativeRef, {
     },
   },
 })
+
 </script>
 
 <template>

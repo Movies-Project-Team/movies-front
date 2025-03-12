@@ -62,13 +62,27 @@ type ProfileReponse = {
 type GenresReponse = {
   id: number,
   title: string,
+  slug: string,
   description: string,
+}
+
+type GenresListResponse = {
+  code: number,
+  message: string,
+  data: GenresReponse[],
 }
 
 type LanguageReponse = {
   id: number,
   title: string,
-  code: string,
+  slug: string,
+  description: string,
+}
+
+type LanguageListResponse = {
+  code: number,
+  message: string,
+  data: LanguageReponse[],
 }
 
 type UserData = {

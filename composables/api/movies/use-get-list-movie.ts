@@ -13,11 +13,13 @@ const fetchData = async (params: Record<string, string | number | boolean>): Pro
 };
 
 export const useGetListMovie = (
-  params: Ref<Record<string, string | number | boolean>> = ref({})
+  params: Ref<Record<string, string | number | boolean>> = ref({}),
+  onlyWhenKeyword: boolean = false
 ) => {
   const query = useQuery({
     queryKey: ['movie-list', params],
     queryFn: () => fetchData(params.value),
+    enabled: computed(() => (onlyWhenKeyword ? !!params.value.keyword : true)),
     placeholderData: keepPreviousData,
   });
 

@@ -7,18 +7,27 @@ const { data: languageResponse } = useGetListLanguage();
 const { data: genresResponse } = useGetListGenres();
 const router = useRouter();
 
-const formatData = (response) => {
+const resetQuery = (type) => {
+  router.replace({ path: '/tim-kiem', query: { [type]: null, page: 1 } });
+};
+
+const formatData = (response, type) => {
   const list = response.value?.data?.map(item => ({
-    label: item.title
+    label: item.title,
+    slug: item.slug,
+    command: () => {
+      router.push({ path: '/tim-kiem', query: { [type]: item.slug, page: 1 } });
+    }
   })) || [];
-  
-  return list.length > 12 
-    ? [...list.slice(0, 12), { label: 'Xem thêm' }] 
+
+  return list.length > 12
+    ? [...list.slice(0, 12), { label: 'Xem thêm', command: () => resetQuery(type) }]
     : list;
 };
 
-const languageData = computed(() => formatData(languageResponse));
-const genresData = computed(() => formatData(genresResponse));
+
+const languageData = computed(() => formatData(languageResponse, 'lang'));
+const genresData = computed(() => formatData(genresResponse, 'gen'));
 
 const items = ref([
   {
@@ -38,7 +47,7 @@ const items = ref([
   {
     label: 'Tìm kiếm',
     command: () => {
-      router.push('/tim-kiem');
+      router.push({ path: '/tim-kiem', query: { page: 1 } });
     },
   },
   {
