@@ -9,4 +9,5 @@ export const useMovieStore = defineStore('movie', {
       this.selectedMovieId = id;
     },
   },
+  persist: true,
 });

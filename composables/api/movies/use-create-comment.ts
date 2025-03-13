@@ -6,7 +6,7 @@ const ENDPOINT = '/comment/create';
 
 interface RegisterPayload {
   userId: number;
-  movieId: number | string;
+  movieId: number | null;
   parentId?: number | null;
   isApproved: number;
   content: string;

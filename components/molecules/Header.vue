@@ -20,7 +20,7 @@ const handleLoginSuccess = (isSuccess: boolean) => {
 const menu = ref();
 const items = ref([
   {
-    label: "Chào Nguyễn Trọng Hiếu",
+    label: `Chào ${profileStore.user?.name}`,
   },
   {
     separator: true,

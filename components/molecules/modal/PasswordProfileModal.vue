@@ -33,10 +33,6 @@ const onSubmit = (data: any, profileId = props.profileId) => {
 
   const finishData = { ...data, profileId };
   verifyMutation.mutate(finishData, {
-    onSuccess: () => {
-      profileStore.setVerifyStatus(true);
-      window.location.reload();
-    },
     onError: (error) => {
       checkPassword.value = true;
       errorMessage.value = JSON.parse(error.message);

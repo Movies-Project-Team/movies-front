@@ -58,7 +58,10 @@ const genreItems = [
 ];
 
 const goToDetail = (slug: any) => {
-  router.push(`/xem-phim/${slug}`);
+  router.push({ 
+    path: `/xem-phim/${slug}`, 
+    query: { server: 'vietsub', page: 1 } 
+  });
 };
 </script>
 
@@ -123,14 +126,13 @@ const goToDetail = (slug: any) => {
           </p>
         </Flex>
         <Box>
-          <p :style="{ margin: '4px 0px!important' }">
+          <p :style="{ margin: '4px 0px!important', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '4', overflow: 'hidden' }">
             <span :style="{ fontWeight: '700' }">Giới thiệu: </span>
             {{ plainDescription }}
           </p>
         </Box>
         <Flex :style="{ marginTop: '20px' }" gap="10px">
-          <Button label="Xem phim" icon="pi pi-play" @click="goToDetail(movie.slug)">
-          </Button>
+          <Button label="Xem phim" icon="pi pi-play" @click="goToDetail(movie.slug)"/>
           <Button label="Yêu thích" icon="pi pi-heart" :style="{ background: 'rgb(45, 47, 52)', border: 'none' }" />
           <Button label="Xem sau" icon="pi pi-bookmark" :style="{ background: 'rgb(45, 47, 52)', border: 'none' }"  />
         </Flex>

@@ -26,7 +26,7 @@ type Movie = {
   esp_current?: string,
   slug?: string;
   alt?: string;
-  imdb?: number;
+  imdb?: string;
   model?: string;
   releaseYear?: number;
   totalEpisodes?: number;
@@ -156,6 +156,8 @@ type ImageTmdbResponse = {
 type CommentResponse = {
   id: number,
   content: string,
+  parent: CommentResponse,
+  user: Profile,
   status: number,
   created_at: string,
   replies: CommentResponse[],

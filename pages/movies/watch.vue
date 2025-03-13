@@ -89,6 +89,7 @@ watch(() => commentList.value?.data, updateTotalComments, { deep: true, immediat
 
 // handle comment
 const { mutate } = useComment();
+const profile = useProfileStore();
 const isRefetchComments = async () => {
   await refetchComment();
   updateTotalComments();
@@ -97,8 +98,8 @@ const isRefetchComments = async () => {
 const submitComment = (comment: string) => {
   mutate(
     {
-      movieId: movieId.value,
-      userId: 1,
+      movieId: Number(movieId.value),
+      userId: Number(profile.user?.user_id),
       isApproved: 1,
       content: comment,
     },
@@ -297,7 +298,12 @@ watch(() => route.query.ep, (newEp) => {
             <i class="pi pi-comments" />
             <h2 :style="{ fontSize: '1.25rem', fontWeight: 'bold' }">Bình luận ({{ totalComments }})</h2>
           </Flex>
-          <CommentInput @submitComment="submitComment"/>
+          <div class="comment-wrapper">
+            <CommentInput @submitComment="submitComment" />
+            <div v-if="!profile.user" class="comment-overlay">
+              <p>Đăng nhập để bình luận</p>
+            </div>
+          </div>
           <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="transparent"
             v-if="isLoadingComment" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
           <Flex v-else direction="column" gap="24px">
@@ -305,6 +311,7 @@ watch(() => route.query.ep, (newEp) => {
               v-for="comment in commentsList" 
               :key="comment.id"
               :id="comment.id"
+              :name="comment.user.name"
               :time="comment.created_at" 
               :comment="comment.content" 
               :replies="comment.replies"
@@ -367,4 +374,24 @@ watch(() => route.query.ep, (newEp) => {
 </template>
 
 <style scoped>
+.comment-wrapper {
+  position: relative;
+}
+
+.comment-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
 </style>

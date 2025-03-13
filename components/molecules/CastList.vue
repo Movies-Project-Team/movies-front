@@ -2,6 +2,8 @@
 import CastItem from '../atoms/CastItem.vue';
 import Flex from '../atoms/Flex.vue';
 
+const props = defineProps<{ type?: string, imdb?: string }>();
+
 </script>
 
 <template>

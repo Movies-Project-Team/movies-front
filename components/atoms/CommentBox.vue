@@ -28,6 +28,10 @@ const isReply = computed(() => !!props.repliedTo);
 const showReplies = ref(false);
 const selectedCommentId = ref<number | null>(null);
 
+// get data store
+const profile = useProfileStore();
+const movieId = useMovieStore();
+
 // Tính tổng số replies
 const totalReplies = computed(() => {
   const countReplies = (replies: any[]) => {
@@ -51,8 +55,8 @@ const { mutate } = useComment();
 const submitComment = (comment: string) => {
   mutate(
     {
-      userId: 1,
-      movieId: 1,
+      userId: Number(profile.user?.user_id),
+      movieId: movieId.selectedMovieId,
       parentId: selectedCommentId.value || null,
       isApproved: 1,
       content: comment,
@@ -80,7 +84,7 @@ const submitComment = (comment: string) => {
       </Box>
       <Flex direction="column" gap="10px" :style="{ fontSize: '14px' }">
         <Flex align="center" gap="12px">
-          <Box :style="{ fontWeight: 'bold' }">Nguyễn Văn A</Box>
+          <Box :style="{ fontWeight: 'bold' }">{{ name }}</Box>
           <span :style="{ color: '#aaa', opacity: '.5', fontSize: '12px' }">{{ time }}</span>
         </Flex>
         <Flex gap="6px" align="center">
@@ -112,7 +116,12 @@ const submitComment = (comment: string) => {
     </Flex>
 
     <!-- Hiển thị CommentInput khi nhấn vào nút "Trả lời" -->
-    <CommentInput v-if="replyingState[id]" @close="replyingState[id] = false" @submitComment="submitComment"/>
+    <div class="comment-wrapper">
+      <CommentInput v-if="replyingState[id]" @close="replyingState[id] = false" @submitComment="submitComment"/>
+      <div v-if="!profile.user && replyingState[id]" class="comment-overlay">
+        <p>Đăng nhập để bình luận</p>
+      </div>
+    </div>
 
     <!-- Hiển thị danh sách replies khi showReplies = true -->
     <Flex 
@@ -125,8 +134,9 @@ const submitComment = (comment: string) => {
         v-for="reply in replies" 
         :key="reply.id"
         :id="reply.id"
+        :name="reply.user.name"
         :time="reply.created_at" 
-        :repliedTo="'Nguyễn Văn A'"
+        :repliedTo="reply.parent.user.name"
         :comment="reply.content"
         :replies="reply.replies"
         :level="level + 1"
@@ -135,4 +145,28 @@ const submitComment = (comment: string) => {
     </Flex>
   </Flex>
 </template>
+
+<style scoped>
+.comment-wrapper {
+  position: relative;
+}
+
+.comment-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
+
 
