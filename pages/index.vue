@@ -1,151 +1,32 @@
 <script setup lang="ts">
 import { useSwiper } from '#imports'
-import { Button } from 'primevue';
 import { ref } from 'vue'
 import { EffectFade } from 'swiper/modules';
 import Box from '~/components/atoms/Box.vue';
-import Flex from '~/components/atoms/Flex.vue';
-import Tag from '~/components/atoms/Tag.vue';
 import SectionContainer from '~/components/atoms/SectionContainer.vue';
 import MovieList from '~/components/molecules/MovieList.vue';
 import RankingContainer from '~/components/molecules/RankingContainer.vue';
 import { useWindowWidth } from '@/composables/resize/windowWidth';
 import WatchContinuteList from '~/components/molecules/WatchContinuteList.vue';
+import { MovieService } from '~/services/DummnyDataMovie';
+import SlideItem from '~/components/atoms/SlideItem.vue';
+import { useGetListMovie } from '~/composables/api/movies/use-get-list-movie';
 
-const slides = ref([
-  {
-    id: 1,
-    src: 'https://image.tmdb.org/t/p/original/fYnEbgoNCxW9kL0IgOgtJb9JTBU.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/5qGIxdEO841C0tdY8vOdLoRVrr0.jpg',
-    alt: 'Slide 1',
-    title: 'Nosferatu',
-    imdb: 8.5,
-    model: 'T16',
-    releaseYear: 2023,
-    totalEpisodes: 12,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A gothic tale of obsession between a haunted young woman and the terrifying vampire infatuated with her, causing untold horror in its wake.',
-  },
-  {
-    id: 2,
-    src: 'https://image.tmdb.org/t/p/original/b85bJfrTOSJ7M5Ox0yp4lxIxdG1.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg',
-    alt: 'Slide 2',
-    title: 'Sonic the Hedgehog 3',
-    imdb: 9.1,
-    model: 'T16',
-    releaseYear: 2022,
-    totalEpisodes: 24,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'Sonic, Knuckles, and Tails reunite against a powerful new adversary, Shadow, a mysterious villain with powers unlike anything they have faced before. With their abilities outmatched in every way, Team Sonic must seek out an unlikely alliance in hopes of stopping Shadow and protecting the planet',
-  },
-  {
-    id: 3,
-    src: 'https://image.tmdb.org/t/p/original/xZm5YUNY3PlYD1Q4k7X8zd2V4AK.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/3L3l6LsiLGHkTG4RFB2aBA6BttB.jpg',
-    alt: 'Slide 3',
-    title: 'Back in Action',
-    imdb: 7.8,
-    model: 'T16',
-    releaseYear: 2021,
-    totalEpisodes: 10,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'Fifteen years after vanishing from the CIA to start a family, elite spies Matt and Emily jump back into the world of espionage when their cover is blowns.',
-  },
-  {
-    id: 4,
-    src: 'https://image.tmdb.org/t/p/original/5OsiT39OiZNdD0v2LiAcI2TpSYj.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg',
-    alt: 'Slide 4',
-    title: 'Severance',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'They say whatever doesn’t kill you makes you stronger, but that’s not the case for the world’s weakest hunter Sung Jinwoo. After being brutally slaughtered by monsters in a high-ranking dungeon, Jinwoo came back with the System, a program only he could see, that’s leveling him up in every way. Now, he’s inspired to discover the secrets behind his powers and the dungeon that spawned them.',
-  },
-  {
-    id: 5,
-    src: 'https://image.tmdb.org/t/p/original/z1buWt3MeqamyzVbKggLtlG1rZV.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/bEcFBnDwUXXDizdaR5EiC0qRhS3.jpg',
-    alt: 'Slide 4',
-    title: 'Drifting Away',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
-  },
-  {
-    id: 6,
-    src: 'https://image.tmdb.org/t/p/original/rDa3SfEijeRNCWtHQZCwfbGxYvR.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/1GvBhRxY6MELDfxFrete6BNhBB5.jpg',
-    alt: 'Slide 4',
-    title: 'Kraven the Hunter',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
-  },
-  {
-    id: 7,
-    src: 'https://image.tmdb.org/t/p/original/n5FPNMJ0eRoiQrKGfUQQRAZeaxg.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/tlliQuCupf8fpTH7RAor3aKMGy.jpg',
-    alt: 'Slide 4',
-    title: 'Silo',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
-  },
-  {
-    id: 8,
-    src: 'https://image.tmdb.org/t/p/original/87mebbBtoWzHV0kILgV6M7yIfun.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/1QdXdRYfktUSONkl1oD5gc6Be0s.jpg',
-    alt: 'Slide 4',
-    title: 'Squid Game',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
-  },
-  {
-    id: 9,
-    src: 'https://image.tmdb.org/t/p/original/uKb22E0nlzr914bA9KyA5CVCOlV.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/2E1x1qcHqGZcYuYi4PzVZjzg8IV.jpg',
-    alt: 'Slide 4',
-    title: 'Wicked',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
-  },
-  {
-    id: 10,
-    src: 'https://image.tmdb.org/t/p/original/qSOMdbZ6AOdHR999HWwVAh6ALFI.jpg',
-    poster: 'https://image.tmdb.org/t/p/original/v313aUGmMNj6yNveaiQXysBmjVS.jpg',
-    alt: 'Slide 4',
-    title: 'Alarum',
-    imdb: 8.0,
-    model: 'T16',
-    releaseYear: 2020,
-    totalEpisodes: 16,
-    genres: ['Chính Kịch', 'Tình Cảm', 'Cổ Trang', 'Lãng Mạn'],
-    description: 'A solitary cat, displaced by a great flood, finds refuge on a boat with various species and must navigate the challenges of adapting to a transformed world together.',
-  },
-])
-
+const slides = ref(MovieService.getMovieData());
+const params = ref({
+  "item": 10,
+  "keyword": '',
+});
+const { data, isLoading: isLoadingMovie } = useGetListMovie(params);
 const screenWidth = useWindowWidth();
+const loading = useLoadingStore();
+watchEffect(() => {
+  if (isLoadingMovie.value) {
+    loading.show();
+  } else {
+    loading.hide();
+  }
+});
 
 const swiperCreativeRef = ref(null)
 useSwiper(swiperCreativeRef, {
@@ -169,6 +50,8 @@ useSwiper(swiperCreativeRef, {
     },
   },
 })
+
+provide('movies', data?.value?.data);
 </script>
 
 <template>
@@ -182,52 +65,13 @@ useSwiper(swiperCreativeRef, {
               :key="`slide-creative-${slide.id}`"
               class="swiper-slide"
             >
-              <img 
+              <NuxtImg 
                 :src="slide.src"
                 :alt="slide.alt"
                 style="width: 100%; height: calc(100vh - 40px); object-fit: cover;" 
-                provider="netlify"
+                loading="lazy"
               />
-              <Flex direction="column" justify="center" class="slide-content">
-                <h2 
-                  :style="{
-                    fontSize: '60px'
-                  }"
-                >
-                  {{ slide.title }}
-                </h2>
-                <Flex gap="10px" direction="column"> 
-                  <Flex gap="8px">
-                    <Tag :content="slide.imdb" :sub-content="'IMBd'" :type="'imdb'"/>
-                    <Tag :content="slide.model" :type="'background'"/>
-                    <Tag :content="slide.releaseYear" :type="'classic'"/>
-                    <Tag :content="slide.totalEpisodes" :sub-content="'Tập'" :type="'classic'"/>
-                  </Flex>
-                  <Flex gap="8px">
-                    <Tag v-for="(genre, index) in slide.genres" :key="index" :content="genre" :type="'topic'"/>
-                  </Flex>
-                  <Box 
-                    :style="{
-                      fontSize: '1rem',
-                      lineHeight: 1.6,
-                      color: '#fff',
-                      textShadow: '0 1px 1px rgba(0, 0, 0, .2)',
-                      fontWeight: 400,
-                      marginBottom: '2rem',
-                    }"
-                  >
-                    {{ slide.description }}
-                  </Box>
-                </Flex>
-                <Button 
-                  label="Xem ngay"
-                  icon="pi pi-play-circle"
-                  aria-label="Filter" 
-                  :style="{
-                    width: '170px',
-                    padding: '15px 31px',
-                  }"/>
-              </Flex>
+              <SlideItem :data="slide" />
             </swiper-slide>
           </swiper-container>
         </ClientOnly>
@@ -235,13 +79,13 @@ useSwiper(swiperCreativeRef, {
     </div>
     <Box :style="{ padding: '0px 50px', marginBottom: '60px' }">
       <SectionContainer :title="'Xem tiếp'">
-        <WatchContinuteList :data="slides"/>
+        <WatchContinuteList :data="data?.data ?? []" :is-loading="isLoadingMovie"/>
       </SectionContainer>
       <SectionContainer :title="'Bảng xếp hạng'" :style="{display: screenWidth <= 900 ? 'none' : 'flex'}">
-        <RankingContainer :data="slides"/>
+        <RankingContainer :data="data?.data ?? []" :is-loading="isLoadingMovie"/>
       </SectionContainer>
       <SectionContainer :title="'Phim mới'">
-        <MovieList :data="slides"/>
+        <MovieList :data="data?.data ?? []" :is-loading="isLoadingMovie"/>
       </SectionContainer>
     </Box>
   </main>

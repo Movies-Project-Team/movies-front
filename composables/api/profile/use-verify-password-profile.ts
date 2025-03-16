@@ -10,6 +10,7 @@ interface VerifyPasswordPayload {
 }
 
 interface VerifyPasswordResponse {
+  data: Profile,
   message: string,
 }
 
@@ -33,7 +34,14 @@ export const useVerifyPasswordProfile = () => {
       loading.show();
     },
     onSuccess: (data: VerifyPasswordResponse) => {
+      // store profile
+      const profile = useProfileStore();
+      profile.setVerifyStatus(true);
+      profile.setProfile(data?.data);
+
+      // loading and reload
       loading.hide();
+      window.location.reload();
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {

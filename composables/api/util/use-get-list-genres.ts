@@ -3,9 +3,9 @@ import { apiReClient } from "~/utils/apiReClient";
 
 const ENDPOINT = '/util/genres';
 
-const fetchData = async (): Promise<GenresReponse> => {
+const fetchData = async (): Promise<GenresListResponse> => {
   const api = apiReClient();
-  const response = await api<GenresReponse>(`${ENDPOINT}`, {
+  const response = await api<GenresListResponse>(`${ENDPOINT}`, {
     method: 'GET',
   });
   return response;
