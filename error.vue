@@ -13,7 +13,6 @@ const handleError = () => clearError({ redirect: '/' })
 <template>
   <div class="error-page">
     <div class="gif-container">
-      <img :src="notFoundGif" alt="Not Found" class="not-found-gif" />
     </div>
     <h1 v-if="error?.statusCode === 404">404 - Không Tìm Thấy Trang</h1>
     <h1 v-else>Lỗi: {{ error?.statusCode }}</h1>
