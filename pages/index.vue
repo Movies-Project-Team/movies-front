@@ -21,7 +21,7 @@ const { data, isLoading: isLoadingMovie } = useGetListMovie(params);
 const screenWidth = useWindowWidth();
 const loading = useLoadingStore();
 watchEffect(() => {
-  if (isLoadingMovie.value || !data.value) {
+  if (isLoadingMovie.value) {
     loading.show();
   } else {
     loading.hide();
@@ -79,13 +79,13 @@ provide('movies', data?.value?.data);
     </div>
     <Box :style="{ padding: '0px 50px', marginBottom: '60px' }">
       <SectionContainer :title="'Xem tiếp'">
-        <WatchContinuteList :data="data?.data ?? []"/>
+        <WatchContinuteList :data="data?.data ?? []" :is-loading="isLoadingMovie"/>
       </SectionContainer>
       <SectionContainer :title="'Bảng xếp hạng'" :style="{display: screenWidth <= 900 ? 'none' : 'flex'}">
-        <RankingContainer :data="data?.data ?? []"/>
+        <RankingContainer :data="data?.data ?? []" :is-loading="isLoadingMovie"/>
       </SectionContainer>
       <SectionContainer :title="'Phim mới'">
-        <MovieList :data="data?.data ?? []"/>
+        <MovieList :data="data?.data ?? []" :is-loading="isLoadingMovie"/>
       </SectionContainer>
     </Box>
   </main>

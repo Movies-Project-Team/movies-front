@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Box from './Box.vue';
 import Flex from './Flex.vue';
 
 const props = defineProps<{
@@ -15,6 +14,7 @@ const props = defineProps<{
         fontSize: '28px', 
         fontWeight: '600', 
         textShadow: '0 2px 1px rgba(0, 0, 0, .3)',
+        margin: '24px 0px!important'
       }"
     >{{ title }}</h2>
     <Flex >
